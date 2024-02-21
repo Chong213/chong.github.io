@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="RPN Region Proposal Network Region Proposal：区域选取，也就是提取候选框的意思，所以RPN就是用来提取候选框的网络  1、RPN的意义RPN第一次出现在世人眼中是在Faster RCNN这个结构中，专门用来提取候选框；在RCNN和Fast RCNN等物体检测架构中，用来提取候选框的方法通常是Selective Search；作者提出RPN，专门用来提取候选">
+<meta property="og:type" content="article">
+<meta property="og:title">
+<meta property="og:url" content="http://example.com/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/CNN%E6%A6%82%E5%BF%B5/RPN/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="RPN Region Proposal Network Region Proposal：区域选取，也就是提取候选框的意思，所以RPN就是用来提取候选框的网络  1、RPN的意义RPN第一次出现在世人眼中是在Faster RCNN这个结构中，专门用来提取候选框；在RCNN和Fast RCNN等物体检测架构中，用来提取候选框的方法通常是Selective Search；作者提出RPN，专门用来提取候选">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-02-20T08:24:04.556Z">
+<meta property="article:modified_time" content="2022-12-01T13:21:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":null,"root":"/","typed_text":null,"theme_version":"2.1.10","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","sticky":"TOP","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"The blog has been lovely to run undefined day"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2022-12-01 21:21:46"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.10" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            Cao<span>Chong</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        星唯向导
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/chong-zzxy" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont cg-gitee"></i>
+        </a>
+    
+        <a href="https://space.bilibili.com/271039719" title="BiliBili" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont icon-bilibili"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                name:
+            </div>
+            <div class="trm-label trm-label-light">
+                Caochong
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                from:
+            </div>
+            <div class="trm-label trm-label-light">
+                China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                born:
+            </div>
+            <div class="trm-label trm-label-light">
+                1999.01.10
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                love:
+            </div>
+            <div class="trm-label trm-label-light">
+                AI | life | 粘粘
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/20
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            16:24
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="RPN"><a href="#RPN" class="headerlink" title="RPN"></a>RPN</h1><blockquote>
+<p>Region Proposal Network</p>
+<p>Region Proposal：区域选取，也就是提取候选框的意思，所以RPN就是用来提取候选框的网络</p>
+</blockquote>
+<h2 id="1、RPN的意义"><a href="#1、RPN的意义" class="headerlink" title="1、RPN的意义"></a>1、RPN的意义</h2><p>RPN第一次出现在世人眼中是在Faster RCNN这个结构中，专门用来提取候选框；<br>在RCNN和Fast RCNN等物体检测架构中，用来提取候选框的方法通常是Selective Search；<br>作者提出RPN，专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，称为一个整体。</p>
+<img src="./images/Faster RCNN.jpg" alt="Faster RCNN整体结构" style="zoom: 33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<h2 id="2、RPN运行机制"><a href="#2、RPN运行机制" class="headerlink" title="2、RPN运行机制"></a>2、RPN运行机制</h2><img src="./images/Faster_RPN.jpg" alt="RPN结构"   loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>一个特征图经过sliding window处理，得到256维特征，然后通过两次全连接得到结果2k个分数和4k个坐标；</p>
+<p>相关问题：</p>
+<ol>
+<li><p>RPN的input特征图指的是哪个特征图？</p>
+<p>RPN的输入特征图就是图1中Faster RCNN的公共Feature Map，也称共享Feature Map，主要用以RPN和RoI Pooling共享；</p>
+</li>
+<li><p>为什么是用sliding window？文中不是说用CNN吗？</p>
+<p>我们可以把3x3的sliding window看作是对特征图做了一次3x3的卷积操作，最后得到了一个channel数目是256的特征图，尺寸和公共特征图相同，我们假设是256 x （H x W）</p>
+</li>
+<li><p>256维特征向量如何获得的？</p>
+<p>我们可以近似的把这个特征图看作有H x W个向量，每个向量是256维，那么图中的256维指的就是其中一个向量，然后我们要对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标，由于我们要对每个向量做同样的全连接操作，等同于对整个特征图做两次1 x 1的卷积，得到一个2 x H x W和一个4 x H x W大小的特征图，换句话说，有H x W个结果，每个结果包含2个分数和4个坐标；</p>
+</li>
+<li><p>2k和4k中的k是指什么？</p>
+</li>
+<li><p>图右侧不同形状的矩形和Anchors又是如何得到的？</p>
+</li>
+</ol>
+<img src="./images/解答描述图1_3.jpg" alt="1——3" style="zoom: 33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>首先我们知道有H x W个结果，我们随机取一点，它跟原图肯定是有个一一映射关系的，由于原图和特征图大小不同，所以特征图上的一个点对应原图肯定是一个框，然而这个框很小，比如说8 x 8，这里8是指原图和特征图的比例，所以这个并不是我们想要的框，那我们不妨把框的左上角或者框的中心作为锚点（Anchor），然后想象出一堆框，具体多少，聪明的读者肯定已经猜到，K个，这也就是图中所说的K anchor boxes（由锚点产生的K个框）；换句话说，H x W个点，每个点对应原图有K个框，那么就有H x W x k个框默默的在原图上，那RPN的结果其实就是判断这些框是不是物体以及他们的偏移；那么K个框到底有多大，长宽比是多少？这里是预先设定好的，共有9种组合，所以k等于9，最后我们的结果是针对这9种组合的，所以有H x W x 9个结果，也就是18个分数和36个坐标；</p>
+<img src="./images/解答描述图4_5.jpg" alt="４——５" style="zoom:33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<h2 id="3、RPN的整个流程回顾"><a href="#3、RPN的整个流程回顾" class="headerlink" title="3、RPN的整个流程回顾"></a>3、RPN的整个流程回顾</h2><p>最后我们再把RPN整个流程走一遍，首先通过一系列卷积得到公共特征图，假设他的大小是N x 16 x 16，然后我们进入RPN阶段，首先经过一个3 x 3的卷积，得到一个256 x 16 x 16的特征图，也可以看作16 x 16个256维特征向量，然后经过两次1 x 1的卷积，分别得到一个18 x 16 x 16的特征图，和一个36 x 16 x 16的特征图，也就是16 x 16 x 9个结果，每个结果包含2个分数和4个坐标，再结合预先定义的Anchors，经过后处理，就得到候选框；整个流程如图5：</p>
+<img src="./images/RPN.jpg" alt="这里写图片描述" style="zoom:33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+
+
+<h2 id="ROIPooling"><a href="#ROIPooling" class="headerlink" title="ROIPooling"></a>ROIPooling</h2><p><img src="/./images/ROIPooling.jpg" alt="在这里插入图片描述" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<ul>
+<li>RolPooling可以使生成的候选框region proposal映射产生固定大小的feature map</li>
+<li>原图中有一region proposal，映射到特征图中的大小在计算的时候会进行取整操作</li>
+<li>同时对特征图进行<code>7*7</code>分割的时候，如果计算出来是个非整数，也会进行取整操作。</li>
+<li>经过两次量化，即将浮点数取整，原本在特征图上映射的region proposal，再大小上会有一个偏差，这样的像素偏差势必会对后层的回归定位产生影响</li>
+</ul>
+<h2 id="ROIAlign"><a href="#ROIAlign" class="headerlink" title="ROIAlign"></a>ROIAlign</h2><p><img src="/./images/ROIAlign.jpg" alt="在这里插入图片描述" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<ul>
+<li>假定原图中有一region proposal，映射到特征图中，此时，没有像RoiPooling那样就行取整操作，保留浮点数</li>
+<li>pooling后固定成<code>7*7</code>大小的特征图，所以，将在 feature map上映射的的region proposal 划分成49个同等大小的小区域，每个小区域的大小还是存成浮点数</li>
+<li>假定采样点数为4，即表示，对于每个的小区域，平分四份，每一份取其中心点位置，而中心点位置的像素，采用双线性插值法进行计算，这样，就会得到四个点的像素值</li>
+<li>最后，取四个像素值中最大值作为这个小区域的像素值，如此类推，同样是49个小区域得到49个像素值，组成7*7大小的feature map。</li>
+</ul>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ul>
+<li>ROIPooling采用最近邻插法，这种方法好理解、简单，但是不实用，会产生是真现象，产生棋盘格效应，更实用的方法就是双线性插值法，RoIAlign采用此方法。</li>
+<li>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</li>
+</ul>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/CNN%E6%A6%82%E5%BF%B5/%E4%B8%8A%E4%B8%8B%E9%87%87%E6%A0%B7%E5%8D%B7%E7%A7%AF%E6%B1%A0%E5%8C%96/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/CNN%E6%A6%82%E5%BF%B5/%E4%B8%8A%E4%B8%8B%E9%87%87%E6%A0%B7%E5%8D%B7%E7%A7%AF%E6%B1%A0%E5%8C%96/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/CNN%E6%A6%82%E5%BF%B5/FPN/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/CNN%E6%A6%82%E5%BF%B5/FPN/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2020- 2024</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">星唯向导</span>
+        </div>
+    
+
+
+    <!--添加运行时间-->
+    <span id="sitetime"></span>
+    <script language=javascript>
+	    function siteTime(){
+		    window.setTimeout("siteTime()", 1000);
+		    var seconds = 1000;
+		    var minutes = seconds * 60;
+		    var hours = minutes * 60;
+		    var days = hours * 24;
+		    var years = days * 365;
+		    var today = new Date();
+		    var todayYear = today.getFullYear();
+		    var todayMonth = today.getMonth()+1;
+		    var todayDate = today.getDate();
+		    var todayHour = today.getHours();
+		    var todayMinute = today.getMinutes();
+		    var todaySecond = today.getSeconds();
+		/* 
+        Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		    var t1 = Date.UTC(2023,05,25,18,12,20); //北京时间2018-2-13 00:00:00
+		    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		    var diff = t2-t1;
+		    var diffYears = Math.floor(diff/years);
+		    var diffDays = Math.floor((diff/days)-diffYears*365);
+		    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	    }
+	    siteTime();
+    </script>
+    <!--// 添加运行时间-->
+
+      
+
+     
+
+    
+        <div class="trm-footer-item">
+            在年轻的飞奔里，拥抱迎面而来的风~
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        Article table of contents
+				<span id="post-toc-top">
+					TOP
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="RPN"><a rel="nofollow" class="trm-toc-link" href="#RPN"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">RPN</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="1、RPN的意义"><a rel="nofollow" class="trm-toc-link" href="#1、RPN的意义"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">1、RPN的意义</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2、RPN运行机制"><a rel="nofollow" class="trm-toc-link" href="#2、RPN运行机制"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">2、RPN运行机制</span></a></li><li class="trm-toc-item trm-toc-level-2" title="3、RPN的整个流程回顾"><a rel="nofollow" class="trm-toc-link" href="#3、RPN的整个流程回顾"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">3、RPN的整个流程回顾</span></a></li><li class="trm-toc-item trm-toc-level-2" title="ROIPooling"><a rel="nofollow" class="trm-toc-link" href="#ROIPooling"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">ROIPooling</span></a></li><li class="trm-toc-item trm-toc-level-2" title="ROIAlign"><a rel="nofollow" class="trm-toc-link" href="#ROIAlign"><span class="trm-toc-number">1.5.</span> <span class="trm-toc-text">ROIAlign</span></a></li><li class="trm-toc-item trm-toc-level-2" title="总结："><a rel="nofollow" class="trm-toc-link" href="#总结："><span class="trm-toc-number">1.6.</span> <span class="trm-toc-text">总结：</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="Open toc">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.10"></script>
+
+</body>
+
+</html>

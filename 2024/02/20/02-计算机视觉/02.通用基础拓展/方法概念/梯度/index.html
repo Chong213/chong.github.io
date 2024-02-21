@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="梯度 梯度是建立在偏导数与方向导数概念基础上的  基础概念偏导数：对于一个多元函数，选定一个自变量并让其他自变量保持不变，只考察因变量与选定自变量的变化关系。 方向导数：除了沿坐标轴方向上的导数，多元函数在非坐标轴方向上也可以求导数，这种导数称为方向导数。 梯度（gradient）：可以定义为一个函数的全部偏导数构成的向量(这一点与偏导数与方向导数不同，两者都为标量)。 梯度向量的方向即为函数值增">
+<meta property="og:type" content="article">
+<meta property="og:title">
+<meta property="og:url" content="http://example.com/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/%E6%96%B9%E6%B3%95%E6%A6%82%E5%BF%B5/%E6%A2%AF%E5%BA%A6/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="梯度 梯度是建立在偏导数与方向导数概念基础上的  基础概念偏导数：对于一个多元函数，选定一个自变量并让其他自变量保持不变，只考察因变量与选定自变量的变化关系。 方向导数：除了沿坐标轴方向上的导数，多元函数在非坐标轴方向上也可以求导数，这种导数称为方向导数。 梯度（gradient）：可以定义为一个函数的全部偏导数构成的向量(这一点与偏导数与方向导数不同，两者都为标量)。 梯度向量的方向即为函数值增">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-02-20T08:24:04.706Z">
+<meta property="article:modified_time" content="2023-03-02T09:22:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":null,"root":"/","typed_text":null,"theme_version":"2.1.10","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","sticky":"TOP","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"The blog has been lovely to run undefined day"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-03-02 17:22:52"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.10" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            Cao<span>Chong</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        星唯向导
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/chong-zzxy" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont cg-gitee"></i>
+        </a>
+    
+        <a href="https://space.bilibili.com/271039719" title="BiliBili" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont icon-bilibili"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                name:
+            </div>
+            <div class="trm-label trm-label-light">
+                Caochong
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                from:
+            </div>
+            <div class="trm-label trm-label-light">
+                China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                born:
+            </div>
+            <div class="trm-label trm-label-light">
+                1999.01.10
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                love:
+            </div>
+            <div class="trm-label trm-label-light">
+                AI | life | 粘粘
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/20
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            16:24
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="梯度"><a href="#梯度" class="headerlink" title="梯度"></a>梯度</h1><blockquote>
+<p>梯度是建立在偏导数与方向导数概念基础上的</p>
+</blockquote>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>偏导数：对于一个多元函数，选定一个自变量并让其他自变量保持不变，只考察因变量与选定自变量的变化关系。</p>
+<p>方向导数：除了沿坐标轴方向上的导数，多元函数在非坐标轴方向上也可以求导数，这种导数称为<strong>方向导数</strong>。</p>
+<p>梯度（gradient）：可以定义为一个函数的全部偏导数构成的向量(这一点与偏导数与方向导数不同，两者都为标量)。</p>
+<p><strong>梯度向量的方向即为函数值增长最快的方向</strong></p>
+<p>梯度下降，主要目的是通过迭代找到目标函数的最小值。（下山）</p>
+<p>损失函数和代价函数是同一个东西，目标函数是一个与他们相关但更广的概念</p>
+<h2 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h2><p>深度学习最常用的优化方法就是随机梯度下降法。</p>
+<p><strong>批量梯度下降法</strong>在全部训练集上计算准确的梯度。批量梯度下降法的每一 步都把整个训练集载入进来进行计算，时间花费和内存开销都非常大，无法应用于大数据集、大模型的场景。</p>
+<p><strong>随机梯度下降法</strong>则放弃了对梯度准确性的追求，每步仅仅随机采样一个(或少量)样本来估计当前梯度，计算速度快，内存开销小。<br><strong>粗糙的梯度估计使得它在两山壁间来回反弹震荡，不能沿山道方向迅速下降，导致收敛不稳定和收敛速度慢</strong>。<br><strong>在鞍点处，随机梯度下降法会走入一片平坦之地</strong></p>
+<p><img src="images/梯度/随机梯度下降.png" alt="在这里插入图片描述" style="zoom:33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/><img src="images/梯度/随机梯度下降不足.png" alt="在这里插入图片描述" style="zoom: 50%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/></p>
+<p><strong>解决方案：动量（Momentum）方法、AdaGrad方法、Adam方法</strong></p>
+<ol>
+<li><p>动量（Momentum）方法</p>
+</li>
+<li><p>AdaGrad方法</p>
+</li>
+<li><p>Adam方法</p>
+</li>
+</ol>
+<h2 id="梯度消失、梯度爆炸、梯度弥散"><a href="#梯度消失、梯度爆炸、梯度弥散" class="headerlink" title="梯度消失、梯度爆炸、梯度弥散"></a>梯度消失、梯度爆炸、梯度弥散</h2><p>目前优化神经网络的方法都是基于<strong>BP</strong>，即根据损失函数计算的误差通过<strong>梯度反向传播</strong>的方式，指导深度网络权值的更新优化。<br>其中将误差从末层往前传递的过程需要<strong>链式法则</strong>（Chain Rule）的帮助，因此反向传播算法可以说是梯度下降在链式法则中的应用。</p>
+<p>而链式法则是一个连乘的形式，所以当层数越深的时候，梯度将以指数形式传播。<br><strong>梯度消失问题和梯度爆炸问题一般随着网络层数的增加会变得越来越明显。</strong><br>在根据损失函数计算的误差通过梯度反向传播的方式对深度网络权值进行更新时，得到的梯度值接近0或特别大，也就是梯度消失或爆炸。<br>梯度消失或梯度爆炸在本质原理上其实是一样的。</p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><ul>
+<li><p>梯度消失</p>
+<ol>
+<li>深层网络</li>
+<li>不合适的损失函数，比如signmoid。</li>
+</ol>
+<p><strong>当梯度消失发生时，接近于输出层的隐藏层由于其梯度相对正常，所以权值更新时也就相对正常，但是当越靠近输入层时，由于梯度消失现象，会导致靠近输入层的隐藏层权值更新缓慢或者更新停滞。这就导致在训练时，只等价于后面几层的浅层网络的学习。</strong></p>
+</li>
+<li><p>梯度爆炸</p>
+</li>
+</ul>
+<p>梯度消失&#x2F;爆炸有什么表现</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/%E6%96%B9%E6%B3%95%E6%A6%82%E5%BF%B5/%E6%AD%A3%E8%B4%9F%E6%A0%B7%E6%9C%AC/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/%E6%96%B9%E6%B3%95%E6%A6%82%E5%BF%B5/%E6%AD%A3%E8%B4%9F%E6%A0%B7%E6%9C%AC/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/%E6%96%B9%E6%B3%95%E6%A6%82%E5%BF%B5/%E5%BC%A0%E9%87%8F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/%E6%96%B9%E6%B3%95%E6%A6%82%E5%BF%B5/%E5%BC%A0%E9%87%8F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2020- 2024</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">星唯向导</span>
+        </div>
+    
+
+
+    <!--添加运行时间-->
+    <span id="sitetime"></span>
+    <script language=javascript>
+	    function siteTime(){
+		    window.setTimeout("siteTime()", 1000);
+		    var seconds = 1000;
+		    var minutes = seconds * 60;
+		    var hours = minutes * 60;
+		    var days = hours * 24;
+		    var years = days * 365;
+		    var today = new Date();
+		    var todayYear = today.getFullYear();
+		    var todayMonth = today.getMonth()+1;
+		    var todayDate = today.getDate();
+		    var todayHour = today.getHours();
+		    var todayMinute = today.getMinutes();
+		    var todaySecond = today.getSeconds();
+		/* 
+        Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		    var t1 = Date.UTC(2023,05,25,18,12,20); //北京时间2018-2-13 00:00:00
+		    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		    var diff = t2-t1;
+		    var diffYears = Math.floor(diff/years);
+		    var diffDays = Math.floor((diff/days)-diffYears*365);
+		    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	    }
+	    siteTime();
+    </script>
+    <!--// 添加运行时间-->
+
+      
+
+     
+
+    
+        <div class="trm-footer-item">
+            在年轻的飞奔里，拥抱迎面而来的风~
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        Article table of contents
+				<span id="post-toc-top">
+					TOP
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="梯度"><a rel="nofollow" class="trm-toc-link" href="#梯度"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">梯度</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="基础概念"><a rel="nofollow" class="trm-toc-link" href="#基础概念"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">基础概念</span></a></li><li class="trm-toc-item trm-toc-level-2" title="梯度下降法"><a rel="nofollow" class="trm-toc-link" href="#梯度下降法"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">梯度下降法</span></a></li><li class="trm-toc-item trm-toc-level-2" title="梯度消失、梯度爆炸、梯度弥散"><a rel="nofollow" class="trm-toc-link" href="#梯度消失、梯度爆炸、梯度弥散"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">梯度消失、梯度爆炸、梯度弥散</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="原因"><a rel="nofollow" class="trm-toc-link" href="#原因"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">原因</span></a></li></ol></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="Open toc">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.10"></script>
+
+</body>
+
+</html>

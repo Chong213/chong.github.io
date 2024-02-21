@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="14种轻量级网络综述——主干网络篇 网址：https:&#x2F;&#x2F;blog.csdn.net&#x2F;Yong_Qi2015&#x2F;article&#x2F;details&#x2F;119224938 本文未展示：SqueezeNet、MnasNet、ESPNe、IGC、FBNet、WeightNet、MicroNet、PeleeNet 本文展示：ShuffleNet系列、MobileNet系列、CondenseNet、ChannelN">
+<meta property="og:type" content="article">
+<meta property="og:title">
+<meta property="og:url" content="http://example.com/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84/%E8%BD%BB%E9%87%8F%E7%BA%A7%E4%B8%BB%E5%B9%B2%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="14种轻量级网络综述——主干网络篇 网址：https:&#x2F;&#x2F;blog.csdn.net&#x2F;Yong_Qi2015&#x2F;article&#x2F;details&#x2F;119224938 本文未展示：SqueezeNet、MnasNet、ESPNe、IGC、FBNet、WeightNet、MicroNet、PeleeNet 本文展示：ShuffleNet系列、MobileNet系列、CondenseNet、ChannelN">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-02-20T08:24:04.803Z">
+<meta property="article:modified_time" content="2022-11-13T05:35:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":null,"root":"/","typed_text":null,"theme_version":"2.1.10","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","sticky":"TOP","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"The blog has been lovely to run undefined day"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2022-11-13 13:35:34"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.10" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            Cao<span>Chong</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        星唯向导
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/chong-zzxy" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont cg-gitee"></i>
+        </a>
+    
+        <a href="https://space.bilibili.com/271039719" title="BiliBili" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont icon-bilibili"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                name:
+            </div>
+            <div class="trm-label trm-label-light">
+                Caochong
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                from:
+            </div>
+            <div class="trm-label trm-label-light">
+                China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                born:
+            </div>
+            <div class="trm-label trm-label-light">
+                1999.01.10
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                love:
+            </div>
+            <div class="trm-label trm-label-light">
+                AI | life | 粘粘
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/20
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            16:24
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="14种轻量级网络综述——主干网络篇"><a href="#14种轻量级网络综述——主干网络篇" class="headerlink" title="14种轻量级网络综述——主干网络篇"></a>14种轻量级网络综述——主干网络篇</h1><blockquote>
+<p>网址：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Yong_Qi2015/article/details/119224938">https://blog.csdn.net/Yong_Qi2015/article/details/119224938</a></p>
+<p>本文未展示：SqueezeNet、MnasNet、ESPNe、IGC、FBNet、WeightNet、MicroNet、PeleeNet</p>
+<p>本文展示：<a href="#ShuffleNet%E7%B3%BB%E5%88%97">ShuffleNet系列</a>、<a href="#MobileNet%E7%B3%BB%E5%88%97">MobileNet系列</a>、<a href="#CondenseNet">CondenseNet</a>、<a href="#ChannelNets">ChannelNets</a>、<a href="#EfficientNet">EfficientNet</a>、<a href="#GhostNet">GhostNet</a>、</p>
+</blockquote>
+<blockquote>
+<p>ShuffleNetV1主要通过分组卷积和通道重排(channel shuffle)来设计卷积神经网络模型, 以减少模型的参数量和计算量，这两个操作分别对应MobileNetV1深度分离卷积中的深度卷积和逐点卷积。</p>
+</blockquote>
+<h2 id="ShuffleNet系列"><a href="#ShuffleNet系列" class="headerlink" title="ShuffleNet系列"></a>ShuffleNet系列</h2><blockquote>
+<p>ShuffleNet系列是轻量级网络中很重要的一个系列，<br>ShuffleNetV1提出了channel shuffle操作，使得网络可以尽情地使用分组卷积来加速，<br>而ShuffleNetV2则推倒V1的大部分设计，从实际出发，提出channel split操作，在加速网络的同时进行了特征重用，达到了很好的效果。</p>
+</blockquote>
+<h3 id="ShuffleNet-V1"><a href="#ShuffleNet-V1" class="headerlink" title="ShuffleNet V1"></a>ShuffleNet V1</h3><p>ShuffleNet的核心在于使用channel shuffle操作弥补分组间的信息交流，使得网络可以尽情使用pointwise分组卷积，不仅可以减少主要的网络计算量，也可以增加卷积的维度。</p>
+<img src="./images/ShuffleNetV1.png" alt="img" style="zoom: 67%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>在目前的一些主流网络中，通常使用pointwise卷积进行维度的降低，从而降低网络的复杂度，但由于输入维度较高，pointwise卷积的开销也是十分巨大的。对于小网络而言，昂贵的pointwise卷积会带来明显的性能下降，比如在ResNext unit中，pointwise卷积占据了93.4%的计算量。为此，论文引入了分组卷积，首先探讨了两种ShuffleNet的实现：</p>
+<ul>
+<li>图1a是最直接的方法，将所有的操作进行了绝对的维度隔离，但这会导致特定的输出仅关联了很小一部分的输入，阻隔了组间的信息流，降低了表达能力。</li>
+<li>图1b对输出的维度进行重新分配，首先将每个组的输出分成多个子组，然后将每个子组输入到不同的组中，能够很好地保留组间的信息流。</li>
+</ul>
+<p>图1b的思想可以简单地用channel shuffle操作进行实现，如图1c所示, 假设包含<code>g</code>组的卷积 层输出为<code>g x n</code>维，首先将输出reshape()为<code>(g，n)</code>, 然后进行transpose 0 , 最后再flatten()回<code>g，n</code>维。</p>
+<h3 id="ShuffleNet-V2"><a href="#ShuffleNet-V2" class="headerlink" title="ShuffleNet V2"></a>ShuffleNet V2</h3><p>ShuffleNetV1的pointwise分组卷积以及bottleneck结果均会提高MAC，导致不可忽视的计算损耗。为了达到高性能以及高准确率，关键是在不通过稠密卷积以及过多分组的情况下，获得输入输出一样的大维度卷积。ShuffleNet V2从实践出发，以实际的推理速度为指导，总结出了5条轻量级网络的设计要领，并根据要领提出了ShuffleNetV2，很好地兼顾了准确率和速度，其中channel split操作十分亮眼，将输入特征分成两部分，达到了类似DenseNet的特征重用效果。</p>
+<img src="./images/ShuffleNetV2.png" alt="img"   loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+
+
+<p>ShuffeNetV1的unit结构如图3ab所示，在V1的基础上加入channel split操作，如图3c所示。</p>
+<p>在每个unit的开头，将特征图分为<img src="./images/c-c_.png" alt="image-20210904192722302" style="zoom:50%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/> 以及 <img src="./images/c_.png" alt="image-20210904192732329" style="zoom:50%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>两部分，一个分支直接往后传递，另一个分支包含3个输入输出维度一样的卷积。</p>
+<p>V2不再使用分组卷积，因为unit的开头已经相当于进行了分组卷积。</p>
+<p>在完成卷积操作后，将特征concate，恢复到unit的输入大小，然后进行channel shuffle操作。</p>
+<p>这里没有了element-wise adddition操作，也节省了一些计算量，在实现的时候将<code>concat</code> &#x2F; <code>channel shuffle</code> &#x2F; <code>channel split</code>合在一起做了，能够进一步提升性能。</p>
+<p>空间下采样时对unit进行了少量的修改，如图3d所示，去掉了channel split操作，因此输出大小降低一倍，而维度则会增加一倍。</p>
+<h2 id="MobileNet系列"><a href="#MobileNet系列" class="headerlink" title="MobileNet系列"></a>MobileNet系列</h2><blockquote>
+<p>MobileNet系列是<strong>很重要</strong>的轻量级网络家族，出自谷歌，MobileNetV1使用<strong>深度可分离卷积</strong>构建轻量级网络，MobileNetV2提出创新的inverted residual with linear bottleneck单元，虽然层数变多了，但是整体网络准确率和速度都有提升，MobileNetV3则结合AutoML技术与人工微调进行更轻量级的网络构建。</p>
+</blockquote>
+<h3 id="MobileNetV1"><a href="#MobileNetV1" class="headerlink" title="MobileNetV1"></a>MobileNetV1</h3><p>MobileNetV1基于深度可分离卷积构建了非常轻量且延迟小的模型，并且可以通过两个超参数进一步控制模型的大小，该模型能够应用到终端设备中，具有很重要的实践意义。</p>
+<img src="./images/MobileNetV1.png" alt="img" style="zoom: 50%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>MobileNet通过深度可分离卷积优进行计算量优化，将标准卷积转化为深度卷积和pointwise卷积，每层后面都会接BN和ReLU。</p>
+<h3 id="MobileNetV2"><a href="#MobileNetV2" class="headerlink" title="MobileNetV2"></a>MobileNetV2</h3><img src="./images/MobileNetV2.png" alt="img" style="zoom:67%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>MobileNetV2首先表明高维特征实际可以用紧凑的低维特征表达，然后提出了新的层单元inverted residual with linear bottleneck，该结构与残差网络单元类似，都包含shorcut，区别在于该结构是输入输出维度少，中间通过线性卷积先扩展升维，然后通过深度卷积进行特征提取，最后再映射降维，可以很好地保持网络性能且网络更加轻量。</p>
+<h3 id="MobileNetV3"><a href="#MobileNetV3" class="headerlink" title="MobileNetV3"></a>MobileNetV3</h3><p><img src="/./images/MobileNetV3.png" alt="img" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>MobileNetV3先基于AutoML构建网络，然后进行人工微调优化，搜索方法使用了platform-aware NAS以及NetAdapt，分别用于全局搜索以及局部搜索，而人工微调则调整了网络前后几层的结构、bottleneck加入SE模块以及提出计算高效的h-swish非线性激活。</p>
+<h2 id="CondenseNet"><a href="#CondenseNet" class="headerlink" title="CondenseNet"></a>CondenseNet</h2><p>DenseNet基于特征复用，能够达到很好的性能，但是论文认为其内在连接存在很多冗余，早期的特征不需要复用到较后的层。为此，论文基于可学习分组卷积提出CondenseNet，能够在训练阶段自动稀疏网络结构，选择最优的输入输出连接模式，并在最后将其转换成常规的分组卷积分组卷积结构。</p>
+<p><img src="/./images/CondenseNet.png" alt="img" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>分组卷积的学习包含多个阶段，前半段训练过程包含多个condensing阶段，结合引导稀疏化的正则化方法来反复训练网络，然后将不重要的filter剪枝。后半部分为optimization阶段，这个阶段对剪枝固定后的网络进行学习。</p>
+<h2 id="ChannelNets"><a href="#ChannelNets" class="headerlink" title="ChannelNets"></a>ChannelNets</h2><img src="./images/ChannelNets.png" alt="img" style="zoom:67%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>论文提出channel-wise卷积的概念，将输入输出维度的连接进行稀疏化而非全连接，区别于分组卷积的严格分组，以类似卷积滑动的形式将输入channel与输出channel进行关联，能够更好地保留channel间的信息交流。基于channel-wise卷积的思想，论文进一步提出了channel-wise深度可分离卷积，并基于该结构替换网络最后的全连接层+全局池化的操作，搭建了ChannelNets。</p>
+<h2 id="EfficientNet"><a href="#EfficientNet" class="headerlink" title="EfficientNet"></a>EfficientNet</h2><img src="./images/EfficientNet.png" alt="img" style="zoom:67%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>论文对模型缩放进行深入研究，提出混合缩放方法，该方法可以更优地选择宽度、深度和分辨率的维度缩放比例，从而使得模型能够达到更高的精度。另外，论文通过NAS神经架构搜索提出EfficientNet，配合混合缩放方法，能够使用很少量的参数达到较高的准确率。</p>
+<h2 id="GhostNet"><a href="#GhostNet" class="headerlink" title="GhostNet"></a>GhostNet</h2><img src="./images/GhostNet.png" alt="img" style="zoom:50%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>训练好的网络一般都有丰富甚至冗余的特征图信息来保证对输入的理解，相似的特征图类似于对方的ghost。但冗余的特征是网络的关键特性，论文认为与其避免冗余特征，不如以一种cost-efficient的方式接受，于是提出能用更少参数提取更多特征的Ghost模块，首先使用输出很少的原始卷积操作(非卷积层操作)进行输出，再对输出使用一系列简单的线性操作来生成更多的特征。这样，不用改变其输出的特征图数量，Ghost模块的整体的参数量和计算量就已经降低了。</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/FLOPS%20&&%20FLOPs/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/FLOPS%20&&%20FLOPs/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2020- 2024</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">星唯向导</span>
+        </div>
+    
+
+
+    <!--添加运行时间-->
+    <span id="sitetime"></span>
+    <script language=javascript>
+	    function siteTime(){
+		    window.setTimeout("siteTime()", 1000);
+		    var seconds = 1000;
+		    var minutes = seconds * 60;
+		    var hours = minutes * 60;
+		    var days = hours * 24;
+		    var years = days * 365;
+		    var today = new Date();
+		    var todayYear = today.getFullYear();
+		    var todayMonth = today.getMonth()+1;
+		    var todayDate = today.getDate();
+		    var todayHour = today.getHours();
+		    var todayMinute = today.getMinutes();
+		    var todaySecond = today.getSeconds();
+		/* 
+        Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		    var t1 = Date.UTC(2023,05,25,18,12,20); //北京时间2018-2-13 00:00:00
+		    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		    var diff = t2-t1;
+		    var diffYears = Math.floor(diff/years);
+		    var diffDays = Math.floor((diff/days)-diffYears*365);
+		    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	    }
+	    siteTime();
+    </script>
+    <!--// 添加运行时间-->
+
+      
+
+     
+
+    
+        <div class="trm-footer-item">
+            在年轻的飞奔里，拥抱迎面而来的风~
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        Article table of contents
+				<span id="post-toc-top">
+					TOP
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="14种轻量级网络综述——主干网络篇"><a rel="nofollow" class="trm-toc-link" href="#14种轻量级网络综述——主干网络篇"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">14种轻量级网络综述——主干网络篇</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="ShuffleNet系列"><a rel="nofollow" class="trm-toc-link" href="#ShuffleNet系列"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">ShuffleNet系列</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="ShuffleNet V1"><a rel="nofollow" class="trm-toc-link" href="#ShuffleNet-V1"><span class="trm-toc-number">1.1.1.</span> <span class="trm-toc-text">ShuffleNet V1</span></a></li><li class="trm-toc-item trm-toc-level-3" title="ShuffleNet V2"><a rel="nofollow" class="trm-toc-link" href="#ShuffleNet-V2"><span class="trm-toc-number">1.1.2.</span> <span class="trm-toc-text">ShuffleNet V2</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="MobileNet系列"><a rel="nofollow" class="trm-toc-link" href="#MobileNet系列"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">MobileNet系列</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="MobileNetV1"><a rel="nofollow" class="trm-toc-link" href="#MobileNetV1"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">MobileNetV1</span></a></li><li class="trm-toc-item trm-toc-level-3" title="MobileNetV2"><a rel="nofollow" class="trm-toc-link" href="#MobileNetV2"><span class="trm-toc-number">1.2.2.</span> <span class="trm-toc-text">MobileNetV2</span></a></li><li class="trm-toc-item trm-toc-level-3" title="MobileNetV3"><a rel="nofollow" class="trm-toc-link" href="#MobileNetV3"><span class="trm-toc-number">1.2.3.</span> <span class="trm-toc-text">MobileNetV3</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="CondenseNet"><a rel="nofollow" class="trm-toc-link" href="#CondenseNet"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">CondenseNet</span></a></li><li class="trm-toc-item trm-toc-level-2" title="ChannelNets"><a rel="nofollow" class="trm-toc-link" href="#ChannelNets"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">ChannelNets</span></a></li><li class="trm-toc-item trm-toc-level-2" title="EfficientNet"><a rel="nofollow" class="trm-toc-link" href="#EfficientNet"><span class="trm-toc-number">1.5.</span> <span class="trm-toc-text">EfficientNet</span></a></li><li class="trm-toc-item trm-toc-level-2" title="GhostNet"><a rel="nofollow" class="trm-toc-link" href="#GhostNet"><span class="trm-toc-number">1.6.</span> <span class="trm-toc-text">GhostNet</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="Open toc">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.10"></script>
+
+</body>
+
+</html>

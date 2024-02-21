@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="yolov5.yaml 这部分属于代码中的配置文件。该代码是xxxx.yaml使用配置文件，通过.&#x2F;models&#x2F;yolo.py解析文件加了一个输入构成的网络模块。  yaml介绍YAML文件，它不是一个标记语言。配置文件有xml、properties等，但YAML是以数据为中心，更适合做配置文件。 yaml介绍大小写敏感；缩进不允许使用tab，只允许空格；缩进的空格数不重要，">
+<meta property="og:type" content="article">
+<meta property="og:title">
+<meta property="og:url" content="http://example.com/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E4%BB%A3%E7%A0%81/yolov5/yolov5.yaml/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="yolov5.yaml 这部分属于代码中的配置文件。该代码是xxxx.yaml使用配置文件，通过.&#x2F;models&#x2F;yolo.py解析文件加了一个输入构成的网络模块。  yaml介绍YAML文件，它不是一个标记语言。配置文件有xml、properties等，但YAML是以数据为中心，更适合做配置文件。 yaml介绍大小写敏感；缩进不允许使用tab，只允许空格；缩进的空格数不重要，">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-02-20T08:24:05.510Z">
+<meta property="article:modified_time" content="2022-11-13T03:20:52.000Z">
+<meta name="twitter:card" content="summary">
+
+
+
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":null,"root":"/","typed_text":null,"theme_version":"2.1.10","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","sticky":"TOP","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"The blog has been lovely to run undefined day"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2022-11-13 11:20:52"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.10" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            Cao<span>Chong</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        星唯向导
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/chong-zzxy" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont cg-gitee"></i>
+        </a>
+    
+        <a href="https://space.bilibili.com/271039719" title="BiliBili" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont icon-bilibili"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                name:
+            </div>
+            <div class="trm-label trm-label-light">
+                Caochong
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                from:
+            </div>
+            <div class="trm-label trm-label-light">
+                China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                born:
+            </div>
+            <div class="trm-label trm-label-light">
+                1999.01.10
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                love:
+            </div>
+            <div class="trm-label trm-label-light">
+                AI | life | 粘粘
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/20
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            16:24
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h3 id="yolov5-yaml"><a href="#yolov5-yaml" class="headerlink" title="yolov5.yaml"></a>yolov5.yaml</h3><blockquote>
+<p>这部分属于代码中的配置文件。该代码是xxxx.yaml使用配置文件，通过.&#x2F;models&#x2F;yolo.py解析文件加了一个输入构成的网络模块。</p>
+</blockquote>
+<h4 id="yaml介绍"><a href="#yaml介绍" class="headerlink" title="yaml介绍"></a>yaml介绍</h4><p>YAML文件，它不是一个标记语言。配置文件有xml、properties等，但YAML是以数据为中心，更适合做配置文件。</p>
+<p>yaml介绍大小写敏感；缩进不允许使用tab，只允许空格；缩进的空格数不重要，只要相同层级的元素左对齐即可；’#’表示注释；使用缩进表示层级关系。</p>
+<p>注意，在yaml文件中空格数其实也是重要的！在建立YAML 对象时，对象键值对使用冒号结构表示 key: value，<strong>冒号后面要加一个空格。</strong></p>
+<h4 id="parameters"><a href="#parameters" class="headerlink" title="parameters"></a>parameters</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># parameters</span></span><br><span class="line">nc: <span class="number">1</span> <span class="comment"># number of classes</span></span><br><span class="line">depth_multiple: <span class="number">0.33</span>  <span class="comment"># model depth multiple</span></span><br><span class="line">width_multiple: <span class="number">0.50</span>  <span class="comment"># layer channel multiple</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>nc：<strong>类别数</strong>，你的类别有多少就填写多少。从1开始算起，不是0-14这样算。</li>
+<li>depth_multiple：控制<strong>模型的深度</strong>。</li>
+<li>width_multiple：控制<strong>卷积核的个数</strong>。</li>
+</ol>
+<p>depth_multiple 是用在backbone中的number≠1的情况下， 即在Bottleneck层使用，控制模型的深度，yolov5l中设置为1.00，假设yolov5l中有三个Bottleneck，那yolov5s中就只有一个Bottleneck。<br>因为一般number&#x3D;1表示的是功能背景的层，比如说下采样Conv、Focus、SPP（空间金字塔池化）。<br>——————————————————————————————————————<br>width_multiple 主要是用于设置arguments，例如yolov5s设置为0.5，Focus就变成[32, 3]，Conv就变成[64, 3, 2]。<br>以此类推，卷积核的个数都变成了设置的一半。</p>
+<h4 id="Anchors"><a href="#Anchors" class="headerlink" title="Anchors"></a>Anchors</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># anchors</span></span><br><span class="line">anchors:</span><br><span class="line">  - [<span class="number">116</span>,<span class="number">90</span>, <span class="number">156</span>,<span class="number">198</span>, <span class="number">373</span>,<span class="number">326</span>]  <span class="comment"># P5/32</span></span><br><span class="line">  - [<span class="number">30</span>,<span class="number">61</span>, <span class="number">62</span>,<span class="number">45</span>, <span class="number">59</span>,<span class="number">119</span>]  <span class="comment"># P4/16</span></span><br><span class="line">  - [<span class="number">10</span>,<span class="number">13</span>, <span class="number">16</span>,<span class="number">30</span>, <span class="number">33</span>,<span class="number">23</span>]  <span class="comment"># P3/8</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="backbone"><a href="#backbone" class="headerlink" title="backbone"></a>backbone</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># YOLOv5 backbone</span></span><br><span class="line">backbone:</span><br><span class="line">  <span class="comment"># [from, number, module, args]</span></span><br><span class="line">  [[-<span class="number">1</span>, <span class="number">1</span>, Focus, [<span class="number">64</span>, <span class="number">3</span>]],  <span class="comment"># 0-P1/2</span></span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, Conv, [<span class="number">128</span>, <span class="number">3</span>, <span class="number">2</span>]],  <span class="comment"># 1-P2/4</span></span><br><span class="line">   [-<span class="number">1</span>, <span class="number">3</span>, BottleneckCSP, [<span class="number">128</span>]],</span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, Conv, [<span class="number">256</span>, <span class="number">3</span>, <span class="number">2</span>]],  <span class="comment"># 3-P3/8</span></span><br><span class="line">   [-<span class="number">1</span>, <span class="number">9</span>, BottleneckCSP, [<span class="number">256</span>]],</span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, Conv, [<span class="number">512</span>, <span class="number">3</span>, <span class="number">2</span>]],  <span class="comment"># 5-P4/16</span></span><br><span class="line">   [-<span class="number">1</span>, <span class="number">9</span>, BottleneckCSP, [<span class="number">512</span>]],</span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, Conv, [<span class="number">1024</span>, <span class="number">3</span>, <span class="number">2</span>]], <span class="comment"># 7-P5/32</span></span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, SPP, [<span class="number">1024</span>, [<span class="number">5</span>, <span class="number">9</span>, <span class="number">13</span>]]],</span><br><span class="line">  ]</span><br></pre></td></tr></table></figure>
+
+<p>Bottleneck 可以译为“瓶颈层”。</p>
+<p>from列参数：-1 代表是从上一层获得的输入，-2表示从上两层获得的输入（head同理）。</p>
+<p>number列参数：1表示只有一个，3表示有三个相同的模块。</p>
+<p>SPP、Conv、Bottleneck、BottleneckCSP的代码可以在.&#x2F;models&#x2F;common.py中获取到。</p>
+<blockquote>
+<p>[64, 3] 解析得到[3, 32, 3] ，输入为3（RGB），输出为32，卷积核k为3；</p>
+<p>[128, 3, 2] 这是固定的，128表示输出128个卷积核个数。根据 [128, 3, 2] 解析得到[32, 64, 3, 2] ，32是输入，64是输出（128*0.5&#x3D;64），3表示3×3的卷积核，2表示步长为2。</p>
+</blockquote>
+<p>主干网是图片从大到小，深度不断加深。</p>
+<p>args这里的输入都省去了，因为输入都是上层的输出。为了修改过于麻烦，这里输入的获取是从.&#x2F;models&#x2F;yolo.py的def parse_model(md, ch)函数中解析得到的。</p>
+<h4 id="head"><a href="#head" class="headerlink" title="head"></a>head</h4><p><strong>head检测头</strong>：一般表示的是经过主干网后输出的特征图，特征图输入head中进行检测，包括类别和位置的检测。</p>
+<p>这里改成了PANet head。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># YOLOv5 head</span></span><br><span class="line">head:</span><br><span class="line">  [[-<span class="number">1</span>, <span class="number">3</span>, BottleneckCSP, [<span class="number">1024</span>, <span class="literal">False</span>]],  <span class="comment"># 9</span></span><br><span class="line"></span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, Conv, [<span class="number">512</span>, <span class="number">1</span>, <span class="number">1</span>]],</span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, nn.Upsample, [<span class="literal">None</span>, <span class="number">2</span>, <span class="string">&#x27;nearest&#x27;</span>]],</span><br><span class="line">   [[-<span class="number">1</span>, <span class="number">6</span>], <span class="number">1</span>, Concat, [<span class="number">1</span>]],  <span class="comment"># cat backbone P4</span></span><br><span class="line">   [-<span class="number">1</span>, <span class="number">3</span>, BottleneckCSP, [<span class="number">512</span>, <span class="literal">False</span>]],  <span class="comment"># 13</span></span><br><span class="line"></span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, Conv, [<span class="number">256</span>, <span class="number">1</span>, <span class="number">1</span>]],</span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, nn.Upsample, [<span class="literal">None</span>, <span class="number">2</span>, <span class="string">&#x27;nearest&#x27;</span>]],</span><br><span class="line">   [[-<span class="number">1</span>, <span class="number">4</span>], <span class="number">1</span>, Concat, [<span class="number">1</span>]],  <span class="comment"># cat backbone P3</span></span><br><span class="line">   [-<span class="number">1</span>, <span class="number">3</span>, BottleneckCSP, [<span class="number">256</span>, <span class="literal">False</span>]],</span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, nn.Conv2d, [na * (nc + <span class="number">5</span>), <span class="number">1</span>, <span class="number">1</span>]],  <span class="comment"># 18 (P3/8-small)</span></span><br><span class="line"></span><br><span class="line">   [-<span class="number">2</span>, <span class="number">1</span>, Conv, [<span class="number">256</span>, <span class="number">3</span>, <span class="number">2</span>]],</span><br><span class="line">   [[-<span class="number">1</span>, <span class="number">14</span>], <span class="number">1</span>, Concat, [<span class="number">1</span>]],  <span class="comment"># cat head P4</span></span><br><span class="line">   [-<span class="number">1</span>, <span class="number">3</span>, BottleneckCSP, [<span class="number">512</span>, <span class="literal">False</span>]],</span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, nn.Conv2d, [na * (nc + <span class="number">5</span>), <span class="number">1</span>, <span class="number">1</span>]],  <span class="comment"># 22 (P4/16-medium)</span></span><br><span class="line"></span><br><span class="line">   [-<span class="number">2</span>, <span class="number">1</span>, Conv, [<span class="number">512</span>, <span class="number">3</span>, <span class="number">2</span>]],</span><br><span class="line">   [[-<span class="number">1</span>, <span class="number">10</span>], <span class="number">1</span>, Concat, [<span class="number">1</span>]],  <span class="comment"># cat head P5</span></span><br><span class="line">   [-<span class="number">1</span>, <span class="number">3</span>, BottleneckCSP, [<span class="number">1024</span>, <span class="literal">False</span>]],</span><br><span class="line">   [-<span class="number">1</span>, <span class="number">1</span>, nn.Conv2d, [na * (nc + <span class="number">5</span>), <span class="number">1</span>, <span class="number">1</span>]],  <span class="comment"># 26 (P5/32-large)</span></span><br><span class="line"></span><br><span class="line">   [[], <span class="number">1</span>, Detect, [nc, anchors]],  <span class="comment"># Detect(P5, P4, P3)</span></span><br><span class="line">  ]</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">                <span class="keyword">from</span>  n    params  module                                  arguments                     </span><br><span class="line"> <span class="number">0</span>                -<span class="number">1</span>  <span class="number">1</span>      <span class="number">3520</span>  models.common.Focus                     [<span class="number">3</span>, <span class="number">32</span>, <span class="number">3</span>]                    </span><br><span class="line"> <span class="number">1</span>                -<span class="number">1</span>  <span class="number">1</span>     <span class="number">18560</span>  models.common.Conv                      [<span class="number">32</span>, <span class="number">64</span>, <span class="number">3</span>, <span class="number">2</span>]                </span><br><span class="line"> <span class="number">2</span>                -<span class="number">1</span>  <span class="number">1</span>     <span class="number">18816</span>  models.common.C3                        [<span class="number">64</span>, <span class="number">64</span>, <span class="number">1</span>]                   </span><br><span class="line"> <span class="number">3</span>                -<span class="number">1</span>  <span class="number">1</span>     <span class="number">73984</span>  models.common.Conv                      [<span class="number">64</span>, <span class="number">128</span>, <span class="number">3</span>, <span class="number">2</span>]               </span><br><span class="line"> <span class="number">4</span>                -<span class="number">1</span>  <span class="number">1</span>    <span class="number">156928</span>  models.common.C3                        [<span class="number">128</span>, <span class="number">128</span>, <span class="number">3</span>]                 </span><br><span class="line"> <span class="number">5</span>                -<span class="number">1</span>  <span class="number">1</span>    <span class="number">295424</span>  models.common.Conv                      [<span class="number">128</span>, <span class="number">256</span>, <span class="number">3</span>, <span class="number">2</span>]              </span><br><span class="line"> <span class="number">6</span>                -<span class="number">1</span>  <span class="number">1</span>    <span class="number">625152</span>  models.common.C3                        [<span class="number">256</span>, <span class="number">256</span>, <span class="number">3</span>]                 </span><br><span class="line"> <span class="number">7</span>                -<span class="number">1</span>  <span class="number">1</span>   <span class="number">1180672</span>  models.common.Conv                      [<span class="number">256</span>, <span class="number">512</span>, <span class="number">3</span>, <span class="number">2</span>]              </span><br><span class="line"> <span class="number">8</span>                -<span class="number">1</span>  <span class="number">1</span>    <span class="number">656896</span>  models.common.SPP                       [<span class="number">512</span>, <span class="number">512</span>, [<span class="number">5</span>, <span class="number">9</span>, <span class="number">13</span>]]        </span><br><span class="line"> <span class="number">9</span>                -<span class="number">1</span>  <span class="number">1</span>   <span class="number">1182720</span>  models.common.C3                        [<span class="number">512</span>, <span class="number">512</span>, <span class="number">1</span>, <span class="literal">False</span>]          </span><br><span class="line"><span class="number">10</span>                -<span class="number">1</span>  <span class="number">1</span>    <span class="number">131584</span>  models.common.Conv                      [<span class="number">512</span>, <span class="number">256</span>, <span class="number">1</span>, <span class="number">1</span>]              </span><br><span class="line"><span class="number">11</span>                -<span class="number">1</span>  <span class="number">1</span>         <span class="number">0</span>  torch.nn.modules.upsampling.Upsample    [<span class="literal">None</span>, <span class="number">2</span>, <span class="string">&#x27;nearest&#x27;</span>]          </span><br><span class="line"><span class="number">12</span>           [-<span class="number">1</span>, <span class="number">6</span>]  <span class="number">1</span>         <span class="number">0</span>  models.common.Concat                    [<span class="number">1</span>]                           </span><br><span class="line"><span class="number">13</span>                -<span class="number">1</span>  <span class="number">1</span>    <span class="number">361984</span>  models.common.C3                        [<span class="number">512</span>, <span class="number">256</span>, <span class="number">1</span>, <span class="literal">False</span>]          </span><br><span class="line"><span class="number">14</span>                -<span class="number">1</span>  <span class="number">1</span>     <span class="number">33024</span>  models.common.Conv                      [<span class="number">256</span>, <span class="number">128</span>, <span class="number">1</span>, <span class="number">1</span>]              </span><br><span class="line"><span class="number">15</span>                -<span class="number">1</span>  <span class="number">1</span>         <span class="number">0</span>  torch.nn.modules.upsampling.Upsample    [<span class="literal">None</span>, <span class="number">2</span>, <span class="string">&#x27;nearest&#x27;</span>]          </span><br><span class="line"><span class="number">16</span>           [-<span class="number">1</span>, <span class="number">4</span>]  <span class="number">1</span>         <span class="number">0</span>  models.common.Concat                    [<span class="number">1</span>]                           </span><br><span class="line"><span class="number">17</span>                -<span class="number">1</span>  <span class="number">1</span>     <span class="number">90880</span>  models.common.C3                        [<span class="number">256</span>, <span class="number">128</span>, <span class="number">1</span>, <span class="literal">False</span>]          </span><br><span class="line"><span class="number">18</span>                -<span class="number">1</span>  <span class="number">1</span>    <span class="number">147712</span>  models.common.Conv                      [<span class="number">128</span>, <span class="number">128</span>, <span class="number">3</span>, <span class="number">2</span>]              </span><br><span class="line"><span class="number">19</span>          [-<span class="number">1</span>, <span class="number">14</span>]  <span class="number">1</span>         <span class="number">0</span>  models.common.Concat                    [<span class="number">1</span>]                           </span><br><span class="line"><span class="number">20</span>                -<span class="number">1</span>  <span class="number">1</span>    <span class="number">296448</span>  models.common.C3                        [<span class="number">256</span>, <span class="number">256</span>, <span class="number">1</span>, <span class="literal">False</span>]          </span><br><span class="line"><span class="number">21</span>                -<span class="number">1</span>  <span class="number">1</span>    <span class="number">590336</span>  models.common.Conv                      [<span class="number">256</span>, <span class="number">256</span>, <span class="number">3</span>, <span class="number">2</span>]              </span><br><span class="line"><span class="number">22</span>          [-<span class="number">1</span>, <span class="number">10</span>]  <span class="number">1</span>         <span class="number">0</span>  models.common.Concat                    [<span class="number">1</span>]                           </span><br><span class="line"><span class="number">23</span>                -<span class="number">1</span>  <span class="number">1</span>   <span class="number">1182720</span>  models.common.C3                        [<span class="number">512</span>, <span class="number">512</span>, <span class="number">1</span>, <span class="literal">False</span>]          </span><br><span class="line"><span class="number">24</span>      [<span class="number">17</span>, <span class="number">20</span>, <span class="number">23</span>]  <span class="number">1</span>     <span class="number">67425</span>  models.yolo.Detect                      [<span class="number">20</span>, [[<span class="number">10</span>, <span class="number">13</span>, <span class="number">16</span>, <span class="number">30</span>, <span class="number">33</span>, <span class="number">23</span>], [<span class="number">30</span>, <span class="number">61</span>, <span class="number">62</span>, <span class="number">45</span>, <span class="number">59</span>, <span class="number">119</span>], [<span class="number">116</span>, <span class="number">90</span>, <span class="number">156</span>, <span class="number">198</span>, <span class="number">373</span>, <span class="number">326</span>]], [<span class="number">128</span>, <span class="number">256</span>, <span class="number">512</span>]]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E5%8F%8C%E9%98%B6%E6%AE%B5/RCNN/RCNN/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E5%8F%8C%E9%98%B6%E6%AE%B5/RCNN/RCNN/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E4%BB%A3%E7%A0%81/yolov5/note/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E4%BB%A3%E7%A0%81/yolov5/note/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2020- 2024</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">星唯向导</span>
+        </div>
+    
+
+
+    <!--添加运行时间-->
+    <span id="sitetime"></span>
+    <script language=javascript>
+	    function siteTime(){
+		    window.setTimeout("siteTime()", 1000);
+		    var seconds = 1000;
+		    var minutes = seconds * 60;
+		    var hours = minutes * 60;
+		    var days = hours * 24;
+		    var years = days * 365;
+		    var today = new Date();
+		    var todayYear = today.getFullYear();
+		    var todayMonth = today.getMonth()+1;
+		    var todayDate = today.getDate();
+		    var todayHour = today.getHours();
+		    var todayMinute = today.getMinutes();
+		    var todaySecond = today.getSeconds();
+		/* 
+        Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		    var t1 = Date.UTC(2023,05,25,18,12,20); //北京时间2018-2-13 00:00:00
+		    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		    var diff = t2-t1;
+		    var diffYears = Math.floor(diff/years);
+		    var diffDays = Math.floor((diff/days)-diffYears*365);
+		    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	    }
+	    siteTime();
+    </script>
+    <!--// 添加运行时间-->
+
+      
+
+     
+
+    
+        <div class="trm-footer-item">
+            在年轻的飞奔里，拥抱迎面而来的风~
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        Article table of contents
+				<span id="post-toc-top">
+					TOP
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-3" title="yolov5.yaml"><a rel="nofollow" class="trm-toc-link" href="#yolov5-yaml"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">yolov5.yaml</span></a></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="Open toc">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.10"></script>
+
+</body>
+
+</html>

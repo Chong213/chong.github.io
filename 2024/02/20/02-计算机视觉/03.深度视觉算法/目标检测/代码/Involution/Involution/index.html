@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="Involution 论文：Inverting the Inherence of Convolution for Visual Recognition   贡献： involution一种新的神经网络算子，它比convolution更轻量更高效，形式上比self-attention更加简洁，可以用在各种视觉任务的模型上取得精度和效率的双重提升。 通过involution的结构设计，我们能够以统一的">
+<meta property="og:type" content="article">
+<meta property="og:title">
+<meta property="og:url" content="http://example.com/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E4%BB%A3%E7%A0%81/Involution/Involution/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="Involution 论文：Inverting the Inherence of Convolution for Visual Recognition   贡献： involution一种新的神经网络算子，它比convolution更轻量更高效，形式上比self-attention更加简洁，可以用在各种视觉任务的模型上取得精度和效率的双重提升。 通过involution的结构设计，我们能够以统一的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-02-20T08:24:05.477Z">
+<meta property="article:modified_time" content="2022-11-13T03:04:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":null,"root":"/","typed_text":null,"theme_version":"2.1.10","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","sticky":"TOP","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"The blog has been lovely to run undefined day"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2022-11-13 11:04:38"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.10" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            Cao<span>Chong</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        星唯向导
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/chong-zzxy" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont cg-gitee"></i>
+        </a>
+    
+        <a href="https://space.bilibili.com/271039719" title="BiliBili" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont icon-bilibili"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                name:
+            </div>
+            <div class="trm-label trm-label-light">
+                Caochong
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                from:
+            </div>
+            <div class="trm-label trm-label-light">
+                China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                born:
+            </div>
+            <div class="trm-label trm-label-light">
+                1999.01.10
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                love:
+            </div>
+            <div class="trm-label trm-label-light">
+                AI | life | 粘粘
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/20
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            16:24
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="Involution"><a href="#Involution" class="headerlink" title="Involution"></a>Involution</h1><blockquote>
+<p>论文：Inverting the Inherence of Convolution for Visual Recognition</p>
+</blockquote>
+<ul>
+<li><h4 id="贡献："><a href="#贡献：" class="headerlink" title="贡献："></a>贡献：</h4><ol>
+<li><code>involution</code>一种新的神经网络算子，它比<code>convolution</code>更轻量更高效，形式上比<code>self-attention</code>更加简洁，可以用在各种视觉任务的模型上取得精度和效率的双重提升。</li>
+<li>通过<code>involution</code>的结构设计，我们能够以统一的视角来理解经典的卷积操作和近来流行的自注意力操作。</li>
+</ol>
+</li>
+<li><p>注：</p>
+<p>1）参数量、计算量降低，性能反而提升</p>
+<p>2）能加在各种模型的不同位置替换convolution，比如backbone，neck和head，一般来讲替换的部分越多，模型性价比越高</p>
+</li>
+</ul>
+<h2 id="普通卷积："><a href="#普通卷积：" class="headerlink" title="普通卷积："></a>普通卷积：</h2><p>卷积核在空间维度和通道维度上具有两大性质：<strong>空间不变性</strong>和<strong>通道特异性</strong></p>
+<ul>
+<li><p><strong>空间不变性：</strong>在特征图上，所有的空间位置使用的都是统一的卷积核</p>
+<ul>
+<li>优势：<ol>
+<li>卷积核参数在所有的空间位置是共享的，有效的节省模型参数；</li>
+<li>卷积操作能够维护平移的等变形</li>
+</ol>
+</li>
+<li>不足：<ol>
+<li><p>理解成滤波器模板（固定的），在不同的空间位置提取的信息是相对比较单一的，不能根据输入灵活的调整卷积核的参数。</p>
+</li>
+<li><p>此外</p>
+<ul>
+<li><p>计算量和参数量受到k影响，因此通常选择较小的卷积核</p>
+</li>
+<li><p>小卷积核限制了卷积操作去一次性捕捉长距离的视觉关系的能力</p>
+</li>
+<li><p>为了更广的感受野，通过多个卷积核的堆叠，某种程度上不如使用一个大的卷积核去捕捉广域的视觉关系</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>通道特异性：</strong>一个特征图由多个通道组成，不同通道使用不同的卷积核</p>
+<ul>
+<li>作用：在不同的通道中蕴含丰富的语义信息，通道数越多，理论上蕴含的语义信息会越丰富</li>
+<li>但是，有相关研究，在不同通道的对应卷积核之间可能会存在比较多的冗余</li>
+</ul>
+</li>
+</ul>
+<h2 id="Involution："><a href="#Involution：" class="headerlink" title="Involution："></a>Involution：</h2><blockquote>
+<p>在设计上与convolution的特性相反，即在通道维度共享kernel，而在空间维度采用空间特异的kernel进行更灵活的建模</p>
+</blockquote>
+<p>①空间特异性：在不同位置上的卷积核是不同的。（kernel对应在一个空间位置上的参数值要与这个位置对应的输入特征向量相关(或者仅由其决定)，incident可以自适应地为不同空间位置分配不同的权重）</p>
+<p> ②通道不变性： 每一个组内的通道共享一个卷积核。这样还可以减少计算复杂度</p>
+<h3 id="involution-opreation"><a href="#involution-opreation" class="headerlink" title="involution opreation"></a>involution opreation</h3><p>$$<br>Y_{i,j,k}&#x3D;\sum_{(u,v)\in{\triangle{k}}}{H_{i,j,k+[K&#x2F;2],v+[K&#x2F;2],[kG&#x2F;C]}X_{i+u,j+v,k}}<br>$$</p>
+<ul>
+<li><h4 id="involution-kernel"><a href="#involution-kernel" class="headerlink" title="involution kernel"></a>involution kernel</h4><p>$$<br>H\in{\mathbb{R}^{H<em>W</em>K<em>K</em>G}}<br>$$</p>
+</li>
+<li><h4 id="Groups"><a href="#Groups" class="headerlink" title="#Groups"></a>#Groups</h4></li>
+</ul>
+<p>$$<br>G<br>$$</p>
+<p>kernel  generated based on input feature map <code>-&gt;</code> kernel size  aligned with the input tensor size<br>$$<br>H_{i,j}&#x3D;\phi{(X_{\Psi_{i,j}})}<br>$$</p>
+<h3 id="Involution实例"><a href="#Involution实例" class="headerlink" title="Involution实例"></a>Involution实例</h3><ul>
+<li><p>kernel generated from a single pixel with an MLP function<br>$$<br>\Psi_{i,j}&#x3D;{(i,j)}<br>\<br>H_{i,j}&#x3D;\phi(X_{i,j})&#x3D;W_1\sigma(W_0X_{i,j})<br>$$</p>
+<ul>
+<li><p>linear transforms<br>$$<br>W_0\in{\mathbb{R}^{\frac{C}{r}<em>C}}<br>\<br>W_1\in{\mathbb{R}^{(K</em>K*G)*\frac{C}{r}}}<br>$$</p>
+</li>
+<li><p>non-linearity<br>$$<br>\sigma&#x3D;ReLU(BN(·))<br>$$</p>
+</li>
+<li><p>channel-to-space reshape<br>$$<br>{1<em>1</em>K^2G}\longrightarrow{K<em>K</em>G}<br>$$</p>
+<img src="./images/image-20211216111607927.png" alt="image-20211216111607927" style="zoom:60%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/></li>
+</ul>
+</li>
+</ul>
+<p>involution卷积需要的参数数量 &#x3D; H×W×K×K×G （H和W是什么？feature map的大小，因为每一个pixel都会产生G个卷积核，所以H×W是feature map的面积，即含有的像素点的个数。将1个像素通过全连接层和激活函数生成K×K×G个维度，通过reshape编程矩阵形式，再通过broadcast生成同样的一定深度，多个通道共享一个卷积核）</p>
+<p>在involution中，<strong>没有</strong>像convolution一样采用<strong>固定</strong>的<strong>weight matrix</strong>作为可学习的参数，而是考虑基于输入feature map生成对应的involution kernel，从而确保kernel size和input feature size在空间维度上能够自动对齐。</p>
+<p>否则的话，例如<strong>在ImageNet上使用固定 大小的图像作为输入训练得到的权重，就无法迁移到输入图像尺寸更大的下游任务中</strong>（比如检测、分割等）。</p>
+<h4 id="involution-kernel生成的通用形式如下："><a href="#involution-kernel生成的通用形式如下：" class="headerlink" title="involution kernel生成的通用形式如下："></a>involution kernel生成的通用形式如下：</h4><p><img src="/./images/Involution/image-20211115165513603.png" alt="image-20211115165513603" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p><strong>注意设计不同的kernel生成函数可以得到involution不同的实例化</strong>：</p>
+<p>比如可以去探索更加精巧的设计来继续发掘involution的潜力，另外通过采用特定的实例化方法也可以将其特例化成为self-attention的形式（见下节）。</p>
+<img src="./images/1226926d42cd0f7f6abd01f3dc7f0db4.png" alt="img" style="zoom:33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p><strong>针对输入feature map的一个坐标点上的特征向量，先通过 (FC-BN-ReLU-FC)和reshape (channel-to-space)变换展开成kernel的形状，从而得到这个坐标点上对应的involution kernel，再和输入feature map上这个坐标点邻域的特征向量进行Multiply-Add得到最终输出的feature map。</strong></p>
+<p>involution操作的参数量 ，计算量分为kernel generation和Multiply-Add (MAdd)两部分 ，明显低于普通convolution的参数量 和计算量 。</p>
+<p>反过头来考虑和卷积已有的优点的对比：</p>
+<ol>
+<li>在通道上共享kernel（仅有G个kernel）允许我们去使用大的空间span（增加 ），从而通过spatial维度的设计提升性能的同时保证了通过channel维度的设计维持效率（ablation in Tab. 6a，6b），即使在不同空间位置不共享权重也不会引起参数量和计算量的显著增长。</li>
+<li>虽然我们没有在空间上的每个pixel直接共享kernel参数，但我们在更高的层面上共享了元参数（meta-weight，即指kernel生成函数的参数），所以仍然能够在不同的空间位置上进行knowledge的共享和迁移。作为对比，抛开参数量大涨的问题不谈，如果将convolution在空间上共享kernel的限制完全放开，让每个pixel自由地学习对应的kernel参数，则无法达到这样的效果。</li>
+</ol>
+<p>总结起来，这种从convolution到involution的设计实际上是在微观粒度（op level）对算力进行了重新的调配，而网络设计的本质就是对算力的分配，目的是将有限的算力调整到最能发挥性能的位置。比如NAS则是在宏观粒度上（network level）通过自动搜索的手段对算力进行了最优配置。</p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="第一步："><a href="#第一步：" class="headerlink" title="第一步："></a>第一步：</h3><p><img src="/./images/Involution/image-20211217160213019.png" alt="image-20211217160213019" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'> </p>
+<h3 id="第二步："><a href="#第二步：" class="headerlink" title="第二步："></a>第二步：</h3><p><img src="/./images/image-20211217160240256.png" alt="image-20211217160240256" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>   </p>
+<h2 id="Self-Attention一般化表达"><a href="#Self-Attention一般化表达" class="headerlink" title="Self-Attention一般化表达"></a>Self-Attention一般化表达</h2><p>严格来说本文提出的Involution本质上可以成为Self-Attention的一般化表达。通过计算Query与Value的对应关系Q和K得到的关联度，得到Self-Attention pool Value，公式为：</p>
+<p><img src="/./images/79d6779357ac45278cfeb297c5f3eaf3.png" alt="img" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'> </p>
+<p><img src="/./images/image-20211217160416067.png" alt="image-20211217160416067" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'> </p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E4%BB%A3%E7%A0%81/yolov5/common.py/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E4%BB%A3%E7%A0%81/yolov5/common.py/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E4%BB%A3%E7%A0%81/Ghost/Ghost/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E4%BB%A3%E7%A0%81/Ghost/Ghost/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2020- 2024</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">星唯向导</span>
+        </div>
+    
+
+
+    <!--添加运行时间-->
+    <span id="sitetime"></span>
+    <script language=javascript>
+	    function siteTime(){
+		    window.setTimeout("siteTime()", 1000);
+		    var seconds = 1000;
+		    var minutes = seconds * 60;
+		    var hours = minutes * 60;
+		    var days = hours * 24;
+		    var years = days * 365;
+		    var today = new Date();
+		    var todayYear = today.getFullYear();
+		    var todayMonth = today.getMonth()+1;
+		    var todayDate = today.getDate();
+		    var todayHour = today.getHours();
+		    var todayMinute = today.getMinutes();
+		    var todaySecond = today.getSeconds();
+		/* 
+        Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		    var t1 = Date.UTC(2023,05,25,18,12,20); //北京时间2018-2-13 00:00:00
+		    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		    var diff = t2-t1;
+		    var diffYears = Math.floor(diff/years);
+		    var diffDays = Math.floor((diff/days)-diffYears*365);
+		    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	    }
+	    siteTime();
+    </script>
+    <!--// 添加运行时间-->
+
+      
+
+     
+
+    
+        <div class="trm-footer-item">
+            在年轻的飞奔里，拥抱迎面而来的风~
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        Article table of contents
+				<span id="post-toc-top">
+					TOP
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="Involution"><a rel="nofollow" class="trm-toc-link" href="#Involution"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">Involution</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="普通卷积："><a rel="nofollow" class="trm-toc-link" href="#普通卷积："><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">普通卷积：</span></a></li><li class="trm-toc-item trm-toc-level-2" title="Involution："><a rel="nofollow" class="trm-toc-link" href="#Involution："><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">Involution：</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="involution opreation"><a rel="nofollow" class="trm-toc-link" href="#involution-opreation"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">involution opreation</span></a></li><li class="trm-toc-item trm-toc-level-3" title="Involution实例"><a rel="nofollow" class="trm-toc-link" href="#Involution实例"><span class="trm-toc-number">1.2.2.</span> <span class="trm-toc-text">Involution实例</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="步骤"><a rel="nofollow" class="trm-toc-link" href="#步骤"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">步骤</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="第一步："><a rel="nofollow" class="trm-toc-link" href="#第一步："><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">第一步：</span></a></li><li class="trm-toc-item trm-toc-level-3" title="第二步："><a rel="nofollow" class="trm-toc-link" href="#第二步："><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">第二步：</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="Self-Attention一般化表达"><a rel="nofollow" class="trm-toc-link" href="#Self-Attention一般化表达"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">Self-Attention一般化表达</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="Open toc">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.10"></script>
+
+</body>
+
+</html>

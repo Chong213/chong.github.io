@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="字符串格式化f-string简介f-string，格式化字符串常量以f或F修饰符引领的字符串，以大括号&#123;&#125;标明被替换的字段与具有恒定值的其它字符串常量不同，格式化字符串实际上是运行时运算求值的表达式。 f-string用法 f-string用大括号 &#123;&#125; 表示被替换字段，其中直接填入替换内容 12number &#x3D; &quot;7&quot;print(f&amp;q">
+<meta property="og:type" content="article">
+<meta property="og:title">
+<meta property="og:url" content="http://example.com/2024/02/20/01-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/04.%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="字符串格式化f-string简介f-string，格式化字符串常量以f或F修饰符引领的字符串，以大括号&#123;&#125;标明被替换的字段与具有恒定值的其它字符串常量不同，格式化字符串实际上是运行时运算求值的表达式。 f-string用法 f-string用大括号 &#123;&#125; 表示被替换字段，其中直接填入替换内容 12number &#x3D; &quot;7&quot;print(f&amp;q">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-02-20T08:24:02.874Z">
+<meta property="article:modified_time" content="2022-11-12T14:54:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":null,"root":"/","typed_text":null,"theme_version":"2.1.10","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","sticky":"TOP","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"The blog has been lovely to run undefined day"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2022-11-12 22:54:26"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.10" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            Cao<span>Chong</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        星唯向导
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/chong-zzxy" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont cg-gitee"></i>
+        </a>
+    
+        <a href="https://space.bilibili.com/271039719" title="BiliBili" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont icon-bilibili"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                name:
+            </div>
+            <div class="trm-label trm-label-light">
+                Caochong
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                from:
+            </div>
+            <div class="trm-label trm-label-light">
+                China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                born:
+            </div>
+            <div class="trm-label trm-label-light">
+                1999.01.10
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                love:
+            </div>
+            <div class="trm-label trm-label-light">
+                AI | life | 粘粘
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/20
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            16:24
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h1><h2 id="f-string"><a href="#f-string" class="headerlink" title="f-string"></a>f-string</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>f-string，格式化字符串常量<br>以<code>f</code>或<code>F</code>修饰符引领的字符串，以大括号<code>&#123;&#125;</code>标明被替换的字段<br>与具有恒定值的其它字符串常量不同，格式化字符串实际上是运行时运算求值的表达式。</p>
+<h3 id="f-string用法"><a href="#f-string用法" class="headerlink" title="f-string用法"></a>f-string用法</h3><ol>
+<li><p>f-string用大括号 <code>&#123;&#125;</code> 表示被替换字段，其中直接填入替换内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">number = <span class="string">&quot;7&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;My lucky number is <span class="subst">&#123;number&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>f-string的大括号 <code>&#123;&#125;</code> 可以填入表达式或调用函数，Python会求出其结果并填入返回的字符串内：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;5 + 8 = <span class="subst">&#123;<span class="number">5</span>+<span class="number">8</span>&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>f-string大括号外如果需要显示大括号，则应输入连续两个大括号 <code>&#123;&#123;` 和 `&#125;&#125;</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;5 <span class="subst">&#123;<span class="string">&quot;&#123;stars&#125;&quot;</span>&#125;</span>&#x27;</span>) <span class="comment"># 5 &#123;stars&#125;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;&#123;&#123;5&#125;&#125; <span class="subst">&#123;<span class="string">&quot;&#123;stars&#125;&quot;</span>&#125;</span>&#x27;</span>) <span class="comment"># &#123;5&#125; &#123;stars&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>f-string大括号内根本就不允许出现 <code>\</code>。<br>如果确实需要 <code>\</code>，则应首先将包含 <code>\</code> 的内容用一个变量表示，再在f-string大括号内填入变量名：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># print(f&quot;newline: &#123;ord(&#x27;\n&#x27;)&#125;&quot;) # 会报错</span></span><br><span class="line">newline = <span class="built_in">ord</span>(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;newline: <span class="subst">&#123;newline&#125;</span>&#x27;</span>) <span class="comment">#       newline: 10</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>f-string采用 <code>&#123;content:format&#125;</code> 设置字符串格式<br>   <code>content</code> 是替换并填入字符串的内容，可为变量、表达式或函数等，<code>format</code>是格式描述符。<br>   采用默认格式时不必指定 <code>&#123;:format&#125;</code>，如上面例子所示只写 <code>&#123;content&#125;</code> 即可。</p>
+</li>
+</ol>
+<p>   常用格式描述符：对齐、数值符号、数字显示方式、数值类型、宽度&amp;精度、千位分隔符等。（详情见页底补充）</p>
+   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例</span></span><br><span class="line">love = <span class="number">520.1314</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;love is <span class="subst">&#123;love:<span class="number">09.2</span>f&#125;</span>&quot;</span>)  <span class="comment"># love is 000520.13</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;love is <span class="subst">&#123;love:&gt;<span class="number">9.2</span>f&#125;</span>&quot;</span>)  <span class="comment"># love is    520.13</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;love is <span class="subst">&#123;love:^<span class="number">9.2</span>f&#125;</span>&quot;</span>)  <span class="comment"># love is  520.13</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;love is <span class="subst">&#123;love:&lt;<span class="number">9.2</span>f&#125;</span>&quot;</span>)  <span class="comment"># love is 520.13</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;love is <span class="subst">&#123;love:&lt;+<span class="number">9.2</span>f&#125;</span>&quot;</span>) <span class="comment"># love is +520.13</span></span><br><span class="line"></span><br><span class="line">family = <span class="string">&quot;father and mother i love you&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;family:52s&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;family:^<span class="number">52.17</span>s&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li><p>f-string大括号内也可填入lambda表达式，但lambda表达式的 <code>:</code> 会被f-string误认为是表达式与格式描述符之间的分隔符，为避免歧义，需要将lambda表达式置于括号 <code>()</code> 内：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># print(f&#x27;result is &#123;lambda x: x ** 2 + 1 (2)&#125;&#x27;) # 报错</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;result is <span class="subst">&#123;(<span class="keyword">lambda</span> x: x ** <span class="number">2</span> + <span class="number">1</span>) (<span class="number">2</span>)&#125;</span>&quot;</span>) <span class="comment"># result is 5</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;result is <span class="subst">&#123;(<span class="keyword">lambda</span> x: x ** <span class="number">2</span> + <span class="number">1</span>) (<span class="number">2</span>):&lt;+<span class="number">7.2</span>f&#125;</span>&quot;</span>) <span class="comment"># result is +5.00</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="formattings"><a href="#formattings" class="headerlink" title="%-formattings"></a>%-formattings</h2><p><strong>print(</strong><code>%-/+/0/m/.n/格式字符</code> <strong>%x)</strong></p>
+<ul>
+<li>[-]：指定左对齐输出</li>
+<li>[+]：对正数加正号</li>
+<li>[0]：指定空位填0</li>
+<li>[m ]：指定最小宽度</li>
+<li>[.n ]：指定精度</li>
+<li>格式字符：指定类型</li>
+<li>x：待转换的表达式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">12345</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%e&quot;</span>%x) <span class="comment"># 1.234500e+04</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%s&quot;</span>%x) <span class="comment"># 等价于str（） 1234</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%d,%c&quot;</span>%(<span class="number">65</span>,<span class="number">65</span>)) <span class="comment"># 使用元组对字符串进行格式化，按位置对应进行 65, A</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="str-format"><a href="#str-format" class="headerlink" title="str.format()"></a>str.format()</h2><p>基础语法格式：<br><strong>&lt;模板字符串&gt;.format(&lt;逗号分隔的参数&gt;)</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;俺叫&#123;0&#125;,&#123;0&#125;今年才&#123;1&#125;岁.&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;星唯&#x27;</span>,<span class="number">18</span>))</span><br><span class="line"><span class="comment"># 俺叫星唯,星唯今年才18岁</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;&#125;&#123;&#125;&#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="string">&quot;小熊&quot;</span>,<span class="string">&quot;与&quot;</span>, <span class="string">&quot;树&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+<p>{&lt;参数序号&#x2F;参数名&gt;:&lt;格式控制信息（格式为：&lt;填充&gt;&lt;对齐&gt;&lt;宽度&gt;&lt;,&gt;&lt;.精度&gt;&lt;类型&gt;）&gt;}</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:b&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">11</span>)) <span class="comment"># 1011</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><h2 id="f-string格式描述符"><a href="#f-string格式描述符" class="headerlink" title="f-string格式描述符"></a>f-string格式描述符</h2><h3 id="对齐"><a href="#对齐" class="headerlink" title="对齐"></a>对齐</h3><table>
+<thead>
+<tr>
+<th align="left">格式描述符</th>
+<th align="left">含义与作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&lt;</code></td>
+<td align="left">左对齐（字符串默认对齐方式）</td>
+</tr>
+<tr>
+<td align="left"><code>&gt;</code></td>
+<td align="left">右对齐（数值默认对齐方式）</td>
+</tr>
+<tr>
+<td align="left"><code>^</code></td>
+<td align="left">居中</td>
+</tr>
+</tbody></table>
+<h3 id="数字符号"><a href="#数字符号" class="headerlink" title="数字符号"></a>数字符号</h3><table>
+<thead>
+<tr>
+<th align="left">格式描述符</th>
+<th align="left">含义与作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>+</code></td>
+<td align="left">负数前加负号（<code>-</code>），正数前加正号（<code>+</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">负数前加负号（<code>-</code>），正数前不加任何符号（默认）</td>
+</tr>
+<tr>
+<td align="left">（空格）</td>
+<td align="left">负数前加负号（<code>-</code>），正数前加一个空格</td>
+</tr>
+</tbody></table>
+<p>注：仅适用于数值类型。</p>
+<h3 id="数字显示方式"><a href="#数字显示方式" class="headerlink" title="数字显示方式"></a>数字显示方式</h3><table>
+<thead>
+<tr>
+<th align="left">格式描述符</th>
+<th align="left">含义与作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>#</code></td>
+<td align="left">切换数字显示方式</td>
+</tr>
+</tbody></table>
+<p>注1：仅适用于数值类型。<br>注2：<code>#</code> 对不同数值类型的作用效果不同，详见下表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">数值类型</th>
+<th align="left">不加<code>#</code>（默认）</th>
+<th align="left">加<code>#</code></th>
+<th align="left">区别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">二进制整数</td>
+<td align="left"><code>&#39;1111011&#39;</code></td>
+<td align="left"><code>&#39;0b1111011&#39;</code></td>
+<td align="left">开头是否显示 <code>0b</code></td>
+</tr>
+<tr>
+<td align="left">八进制整数</td>
+<td align="left"><code>&#39;173&#39;</code></td>
+<td align="left"><code>&#39;0o173&#39;</code></td>
+<td align="left">开头是否显示 <code>0o</code></td>
+</tr>
+<tr>
+<td align="left">十进制整数</td>
+<td align="left"><code>&#39;123&#39;</code></td>
+<td align="left"><code>&#39;123&#39;</code></td>
+<td align="left">无区别</td>
+</tr>
+<tr>
+<td align="left">十六进制整数（小写字母）</td>
+<td align="left"><code>&#39;7b&#39;</code></td>
+<td align="left"><code>&#39;0x7b&#39;</code></td>
+<td align="left">开头是否显示 <code>0x</code></td>
+</tr>
+<tr>
+<td align="left">十六进制整数（大写字母）</td>
+<td align="left"><code>&#39;7B&#39;</code></td>
+<td align="left"><code>&#39;0X7B&#39;</code></td>
+<td align="left">开头是否显示 <code>0X</code></td>
+</tr>
+</tbody></table>
+<h3 id="宽度与精度"><a href="#宽度与精度" class="headerlink" title="宽度与精度"></a><strong>宽度与精度</strong></h3><table>
+<thead>
+<tr>
+<th align="left">格式描述符</th>
+<th align="left">含义与作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>width</code></td>
+<td align="left">整数 <code>width</code> 指定宽度</td>
+</tr>
+<tr>
+<td align="left"><code>0width</code></td>
+<td align="left">整数 <code>width</code> 指定宽度，开头的 <code>0</code> 指定高位用 <code>0</code> 补足宽度</td>
+</tr>
+<tr>
+<td align="left"><code>width.precision</code></td>
+<td align="left">整数 <code>width</code> 指定宽度，整数 <code>precision</code> 指定显示精度</td>
+</tr>
+</tbody></table>
+<p>注1：0width 不可用于复数类型和非数值类型，width.precision 不可用于整数类型。<br>注2：width.precision 用于不同格式类型的浮点数、复数时的含义也不同：用于 f、F、e、E 和 % 时 precision 指定的是小数点后的位数，用于 g 和 G 时 precision 指定的是有效数字位数（小数点前位数+小数点后位数）。<br>注3：width.precision 除浮点数、复数外还可用于字符串，此时 precision 含义是只使用字符串中前 precision 位字符。</p>
+<h3 id="千位分隔符"><a href="#千位分隔符" class="headerlink" title="千位分隔符"></a><strong>千位分隔符</strong></h3><table>
+<thead>
+<tr>
+<th align="left">格式描述符</th>
+<th align="left">含义与作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>,</code></td>
+<td align="left">使用<code>,</code>作为千位分隔符</td>
+</tr>
+<tr>
+<td align="left"><code>_</code></td>
+<td align="left">使用<code>_</code>作为千位分隔符</td>
+</tr>
+</tbody></table>
+<p>注1：若不指定 , 或<code>_</code>，则f-string不使用任何千位分隔符，此为默认设置。<br>注2：, 仅适用于浮点数、复数与十进制整数：对于浮点数和复数，, 只分隔小数点前的数位。<br>注3：_ 适用于浮点数、复数与二、八、十、十六进制整数：对于浮点数和复数，_ 只分隔小数点前的数位；对于二、八、十六进制整数，固定从低位到高位每隔四位插入一个 _（十进制整数是每隔三位插入一个 _）。</p>
+<h3 id="基本格式类型"><a href="#基本格式类型" class="headerlink" title="基本格式类型"></a>基本格式类型</h3><table>
+<thead>
+<tr>
+<th align="left">格式描述符</th>
+<th align="left">含义与作用</th>
+<th align="left">适用变量类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>s</code></td>
+<td align="left">普通字符串格式</td>
+<td align="left">字符串</td>
+</tr>
+<tr>
+<td align="left"><code>b</code></td>
+<td align="left">二进制整数格式</td>
+<td align="left">整数</td>
+</tr>
+<tr>
+<td align="left"><code>c</code></td>
+<td align="left">字符格式，按unicode编码将整数转换为对应字符</td>
+<td align="left">整数</td>
+</tr>
+<tr>
+<td align="left"><code>d</code></td>
+<td align="left">十进制整数格式</td>
+<td align="left">整数</td>
+</tr>
+<tr>
+<td align="left"><code>o</code></td>
+<td align="left">八进制整数格式</td>
+<td align="left">整数</td>
+</tr>
+<tr>
+<td align="left"><code>x</code></td>
+<td align="left">十六进制整数格式（小写字母）</td>
+<td align="left">整数</td>
+</tr>
+<tr>
+<td align="left"><code>X</code></td>
+<td align="left">十六进制整数格式（大写字母）</td>
+<td align="left">整数</td>
+</tr>
+<tr>
+<td align="left"><code>e</code></td>
+<td align="left">科学计数格式，以 <code>e</code> 表示 <code>×10^</code></td>
+<td align="left">浮点数、复数、整数（自动转换为浮点数）</td>
+</tr>
+<tr>
+<td align="left"><code>E</code></td>
+<td align="left">与 <code>e</code> 等价，但以 <code>E</code> 表示 <code>×10^</code></td>
+<td align="left">浮点数、复数、整数（自动转换为浮点数）</td>
+</tr>
+<tr>
+<td align="left"><code>f</code></td>
+<td align="left">定点数格式，默认精度（<code>precision</code>）是6</td>
+<td align="left">浮点数、复数、整数（自动转换为浮点数）</td>
+</tr>
+<tr>
+<td align="left"><code>F</code></td>
+<td align="left">与 <code>f</code> 等价，但将 <code>nan</code> 和 <code>inf</code> 换成 <code>NAN</code> 和 <code>INF</code></td>
+<td align="left">浮点数、复数、整数（自动转换为浮点数）</td>
+</tr>
+<tr>
+<td align="left"><code>g</code></td>
+<td align="left">通用格式，小数用 <code>f</code>，大数用 <code>e</code></td>
+<td align="left">浮点数、复数、整数（自动转换为浮点数）</td>
+</tr>
+<tr>
+<td align="left"><code>G</code></td>
+<td align="left">与 <code>G</code> 等价，但小数用 <code>F</code>，大数用 <code>E</code></td>
+<td align="left">浮点数、复数、整数（自动转换为浮点数）</td>
+</tr>
+<tr>
+<td align="left"><code>%</code></td>
+<td align="left">百分比格式，数字自动乘上100后按 <code>f</code> 格式排版，并加 <code>%</code> 后缀</td>
+<td align="left">浮点数、整数（自动转换为浮点数）</td>
+</tr>
+</tbody></table>
+<p>常用的特殊格式类型：<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior">标准库 <code>datetime</code></a> 给定的用于排版时间信息的格式类型，适用于 <a target="_blank" rel="noopener" href="https://docs.python.org/3/library/datetime.html#date-objects"><code>date</code></a>、<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/datetime.html#datetime-objects"><code>datetime</code></a> 和 <a target="_blank" rel="noopener" href="https://docs.python.org/3/library/datetime.html#time-objects"><code>time</code></a> 对象</p>
+<table>
+<thead>
+<tr>
+<th align="left">格式描述符</th>
+<th align="left">含义</th>
+<th align="left">显示样例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>%a</code></td>
+<td align="left">星期几（缩写）</td>
+<td align="left"><code>&#39;Sun&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%A</code></td>
+<td align="left">星期几（全名）</td>
+<td align="left"><code>&#39;Sunday&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%w</code></td>
+<td align="left">星期几（数字，<code>0</code> 是周日，<code>6</code> 是周六）</td>
+<td align="left"><code>&#39;0&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%u</code></td>
+<td align="left">星期几（数字，<code>1</code> 是周一，<code>7</code> 是周日）</td>
+<td align="left"><code>&#39;7&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%d</code></td>
+<td align="left">日（数字，以 <code>0</code> 补足两位）</td>
+<td align="left"><code>&#39;07&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%b</code></td>
+<td align="left">月（缩写）</td>
+<td align="left"><code>&#39;Aug&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%B</code></td>
+<td align="left">月（全名）</td>
+<td align="left"><code>&#39;August&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%m</code></td>
+<td align="left">月（数字，以 <code>0</code> 补足两位）</td>
+<td align="left"><code>&#39;08&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%y</code></td>
+<td align="left">年（后两位数字，以 <code>0</code> 补足两位）</td>
+<td align="left"><code>&#39;14&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%Y</code></td>
+<td align="left">年（完整数字，不补零）</td>
+<td align="left"><code>&#39;2014&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%H</code></td>
+<td align="left">小时（24小时制，以 <code>0</code> 补足两位）</td>
+<td align="left"><code>&#39;23&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%I</code></td>
+<td align="left">小时（12小时制，以 <code>0</code> 补足两位）</td>
+<td align="left"><code>&#39;11&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%p</code></td>
+<td align="left">上午&#x2F;下午</td>
+<td align="left"><code>&#39;PM&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%M</code></td>
+<td align="left">分钟（以 <code>0</code> 补足两位）</td>
+<td align="left"><code>&#39;23&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%S</code></td>
+<td align="left">秒钟（以 <code>0</code> 补足两位）</td>
+<td align="left"><code>&#39;56&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%f</code></td>
+<td align="left">微秒（以 <code>0</code> 补足六位）</td>
+<td align="left"><code>&#39;553777&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%z</code></td>
+<td align="left">UTC偏移量（格式是 <code>±HHMM[SS]</code>，未指定时区则返回空字符串）</td>
+<td align="left"><code>&#39;+1030&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%Z</code></td>
+<td align="left">时区名（未指定时区则返回空字符串）</td>
+<td align="left"><code>&#39;EST&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%j</code></td>
+<td align="left">一年中的第几天（以 <code>0</code> 补足三位）</td>
+<td align="left"><code>&#39;195&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%U</code></td>
+<td align="left">一年中的第几周（以全年首个周日后的星期为第0周，以 <code>0</code> 补足两位）</td>
+<td align="left"><code>&#39;27&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%w</code></td>
+<td align="left">一年中的第几周（以全年首个周一后的星期为第0周，以 <code>0</code> 补足两位）</td>
+<td align="left"><code>&#39;28&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>%V</code></td>
+<td align="left">一年中的第几周（以全年首个包含1月4日的星期为第1周，以 <code>0</code> 补足两位）</td>
+<td align="left"><code>&#39;28&#39;</code></td>
+</tr>
+</tbody></table>
+<p><img src="/./images/f-string.png" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<h2 id="格式字符"><a href="#格式字符" class="headerlink" title="% 格式字符"></a>% 格式字符</h2><table>
+<thead>
+<tr>
+<th>格式字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%s</td>
+<td>字符串（采用str（）的显示）</td>
+</tr>
+<tr>
+<td>%r</td>
+<td>字符串（采用repr（）的显示）</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>单个字符</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>二进制整数</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>十进制整数</td>
+</tr>
+<tr>
+<td>%i</td>
+<td>十进制整数</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>八进制整数</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>十六进制整数</td>
+</tr>
+<tr>
+<td>%e</td>
+<td>指数（基底写为e）</td>
+</tr>
+<tr>
+<td>%E</td>
+<td>指数（基底写为E）</td>
+</tr>
+<tr>
+<td>%f、%F</td>
+<td>浮点数</td>
+</tr>
+<tr>
+<td>%g</td>
+<td>指数（e）或浮点数（根据显示长度）</td>
+</tr>
+<tr>
+<td>%G</td>
+<td>指数（E）或浮点数（根据长度显示）</td>
+</tr>
+<tr>
+<td>%%</td>
+<td>字符%</td>
+</tr>
+</tbody></table>
+<h2 id="str-format-1"><a href="#str-format-1" class="headerlink" title="str.format"></a>str.format</h2><table>
+<thead>
+<tr>
+<th>&lt;填充&gt;</th>
+<th>&lt;对齐 &gt;</th>
+<th>&lt;宽度&gt;</th>
+<th>&lt;.精度&gt;</th>
+<th>&lt;类别&gt;</th>
+<th>，</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用于填充的<strong>单个</strong>字符</td>
+<td>&lt;(左对齐),&gt;(右对齐),^(居中对齐)</td>
+<td>槽的设定输出宽度</td>
+<td>浮点数小数部分精度或者字符串的最大输出长度</td>
+<td>整数类型&#x2F;浮点数类型</td>
+<td>数字的千分位分隔符，适用于整数和浮点数</td>
+</tr>
+<tr>
+<td>实际长度大于设定长度时，以实际长度为准；实际长度小于设定长度时默认以空格字符补充</td>
+<td>表示在指定宽度内的输出时的对齐方式</td>
+<td>通过&lt;填充&gt;设定，默认为空格</td>
+<td>以“.”开头，对于浮点数表示小数部分的精度，对于字符串表示最大输出长度</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>数据格式控制：</p>
+<p><img src="/./images/str.format.png" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/01-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/05.%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/01-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/05.%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/01-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/07.__xx__/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/01-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/07.__xx__/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2020- 2024</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">星唯向导</span>
+        </div>
+    
+
+
+    <!--添加运行时间-->
+    <span id="sitetime"></span>
+    <script language=javascript>
+	    function siteTime(){
+		    window.setTimeout("siteTime()", 1000);
+		    var seconds = 1000;
+		    var minutes = seconds * 60;
+		    var hours = minutes * 60;
+		    var days = hours * 24;
+		    var years = days * 365;
+		    var today = new Date();
+		    var todayYear = today.getFullYear();
+		    var todayMonth = today.getMonth()+1;
+		    var todayDate = today.getDate();
+		    var todayHour = today.getHours();
+		    var todayMinute = today.getMinutes();
+		    var todaySecond = today.getSeconds();
+		/* 
+        Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		    var t1 = Date.UTC(2023,05,25,18,12,20); //北京时间2018-2-13 00:00:00
+		    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		    var diff = t2-t1;
+		    var diffYears = Math.floor(diff/years);
+		    var diffDays = Math.floor((diff/days)-diffYears*365);
+		    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	    }
+	    siteTime();
+    </script>
+    <!--// 添加运行时间-->
+
+      
+
+     
+
+    
+        <div class="trm-footer-item">
+            在年轻的飞奔里，拥抱迎面而来的风~
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        Article table of contents
+				<span id="post-toc-top">
+					TOP
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="字符串格式化"><a rel="nofollow" class="trm-toc-link" href="#字符串格式化"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">字符串格式化</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="f-string"><a rel="nofollow" class="trm-toc-link" href="#f-string"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">f-string</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="简介"><a rel="nofollow" class="trm-toc-link" href="#简介"><span class="trm-toc-number">1.1.1.</span> <span class="trm-toc-text">简介</span></a></li><li class="trm-toc-item trm-toc-level-3" title="f-string用法"><a rel="nofollow" class="trm-toc-link" href="#f-string用法"><span class="trm-toc-number">1.1.2.</span> <span class="trm-toc-text">f-string用法</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="%-formattings"><a rel="nofollow" class="trm-toc-link" href="#formattings"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">%-formattings</span></a></li><li class="trm-toc-item trm-toc-level-2" title="str.format()"><a rel="nofollow" class="trm-toc-link" href="#str-format"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">str.format()</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-1" title="补充"><a rel="nofollow" class="trm-toc-link" href="#补充"><span class="trm-toc-number">2.</span> <span class="trm-toc-text">补充</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="f-string格式描述符"><a rel="nofollow" class="trm-toc-link" href="#f-string格式描述符"><span class="trm-toc-number">2.1.</span> <span class="trm-toc-text">f-string格式描述符</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="对齐"><a rel="nofollow" class="trm-toc-link" href="#对齐"><span class="trm-toc-number">2.1.1.</span> <span class="trm-toc-text">对齐</span></a></li><li class="trm-toc-item trm-toc-level-3" title="数字符号"><a rel="nofollow" class="trm-toc-link" href="#数字符号"><span class="trm-toc-number">2.1.2.</span> <span class="trm-toc-text">数字符号</span></a></li><li class="trm-toc-item trm-toc-level-3" title="数字显示方式"><a rel="nofollow" class="trm-toc-link" href="#数字显示方式"><span class="trm-toc-number">2.1.3.</span> <span class="trm-toc-text">数字显示方式</span></a></li><li class="trm-toc-item trm-toc-level-3" title="宽度与精度"><a rel="nofollow" class="trm-toc-link" href="#宽度与精度"><span class="trm-toc-number">2.1.4.</span> <span class="trm-toc-text">宽度与精度</span></a></li><li class="trm-toc-item trm-toc-level-3" title="千位分隔符"><a rel="nofollow" class="trm-toc-link" href="#千位分隔符"><span class="trm-toc-number">2.1.5.</span> <span class="trm-toc-text">千位分隔符</span></a></li><li class="trm-toc-item trm-toc-level-3" title="基本格式类型"><a rel="nofollow" class="trm-toc-link" href="#基本格式类型"><span class="trm-toc-number">2.1.6.</span> <span class="trm-toc-text">基本格式类型</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="% 格式字符"><a rel="nofollow" class="trm-toc-link" href="#格式字符"><span class="trm-toc-number">2.2.</span> <span class="trm-toc-text">% 格式字符</span></a></li><li class="trm-toc-item trm-toc-level-2" title="str.format"><a rel="nofollow" class="trm-toc-link" href="#str-format-1"><span class="trm-toc-number">2.3.</span> <span class="trm-toc-text">str.format</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="Open toc">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.10"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="TensorRT-NVIDIA(基于8.2.3)简介 TensorRT 文档、C++ API文档、Python API文档、TensorRT 下载、本教程配套代码及更多样例   用于高效实现已训练好的深度学习模型的推理过程的SDK 内含推理优化器和运行环境 使DL模型能以更高吞吐量和更低的延迟运行 有C++和python的API，完全等价可以混用   工作    构建期（推理优化器）     模型">
+<meta property="og:type" content="article">
+<meta property="og:title">
+<meta property="og:url" content="http://example.com/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/04.%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8/TensorRT/TensorRT-nvidia/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="TensorRT-NVIDIA(基于8.2.3)简介 TensorRT 文档、C++ API文档、Python API文档、TensorRT 下载、本教程配套代码及更多样例   用于高效实现已训练好的深度学习模型的推理过程的SDK 内含推理优化器和运行环境 使DL模型能以更高吞吐量和更低的延迟运行 有C++和python的API，完全等价可以混用   工作    构建期（推理优化器）     模型">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-02-20T08:24:05.718Z">
+<meta property="article:modified_time" content="2022-10-21T13:02:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":null,"root":"/","typed_text":null,"theme_version":"2.1.10","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","sticky":"TOP","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"The blog has been lovely to run undefined day"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2022-10-21 21:02:34"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.10" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            Cao<span>Chong</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        星唯向导
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/chong-zzxy" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont cg-gitee"></i>
+        </a>
+    
+        <a href="https://space.bilibili.com/271039719" title="BiliBili" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont icon-bilibili"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                name:
+            </div>
+            <div class="trm-label trm-label-light">
+                Caochong
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                from:
+            </div>
+            <div class="trm-label trm-label-light">
+                China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                born:
+            </div>
+            <div class="trm-label trm-label-light">
+                1999.01.10
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                love:
+            </div>
+            <div class="trm-label trm-label-light">
+                AI | life | 粘粘
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/20
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            16:24
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="TensorRT-NVIDIA-基于8-2-3"><a href="#TensorRT-NVIDIA-基于8-2-3" class="headerlink" title="TensorRT-NVIDIA(基于8.2.3)"></a>TensorRT-NVIDIA(基于8.2.3)</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html">TensorRT 文档</a>、<a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/tensorrt/api/c_api">C++ API文档</a>、<a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/tensorrt/api/python_api/">Python API文档</a>、<a target="_blank" rel="noopener" href="https://developer.nvidia.com/nvidia-tensorrt-download">TensorRT 下载</a>、<a target="_blank" rel="noopener" href="https://github.com/NVIDIA/trt-samples-for-hackathon-cn/tree/master/cookbook">本教程配套代码及更多样例</a> </p>
+<ol>
+<li>用于高效实现已训练好的深度学习模型的推理过程的SDK</li>
+<li>内含推理优化器和运行环境</li>
+<li>使DL模型能以更高吞吐量和更低的延迟运行</li>
+<li>有C++和python的API，完全等价可以混用</li>
+</ol>
+</blockquote>
+<h3 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h3><ul>
+<li><table>
+<thead>
+<tr>
+<th>构建期（推理优化器）</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模型解析&#x2F;建立</td>
+<td>加载ONNX等其他格式的模型&#x2F;使用原生API搭建模型</td>
+</tr>
+<tr>
+<td>计算图优化</td>
+<td>横向层融合（Conv），纵向融合（Conv+add+ReLU），……</td>
+</tr>
+<tr>
+<td>节点消除</td>
+<td>去除无用层，节点变换（Pad，Slice，Concat，Shffle），……</td>
+</tr>
+<tr>
+<td>多精度支持</td>
+<td>FP32&#x2F;FP16&#x2F;INT8&#x2F;TF32（可能插入reformat节点）</td>
+</tr>
+<tr>
+<td>优选kernel&#x2F;format</td>
+<td>硬件有关优化</td>
+</tr>
+<tr>
+<td>导入plugin</td>
+<td>实现自定义操作</td>
+</tr>
+<tr>
+<td>显存优化</td>
+<td>显存池复用</td>
+</tr>
+</tbody></table>
+</li>
+<li><table>
+<thead>
+<tr>
+<th>运行期（运行时环境）</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>运行时环境</td>
+<td>对象生命期管理，内存显存管理，异常处理</td>
+</tr>
+<tr>
+<td>序列化反序列化</td>
+<td>推理引擎保存为文件或从文件中加载</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h3 id="如何迁移部署已完成模型"><a href="#如何迁移部署已完成模型" class="headerlink" title="如何迁移部署已完成模型"></a>如何迁移部署已完成模型</h3><ol>
+<li><p>使用框架自带<code>TRT</code>接口（TF-TRT，Torch-TensorRT）</p>
+<p>部署在原框架中</p>
+</li>
+<li><p>使用<code>Parser</code>（TF&#x2F;Torch&#x2F;…<code>-&gt;</code>ONNX<code>-&gt;</code>TensorRT）</p>
+<p>ONNX通用性好，便于调整模型，兼顾效率性能</p>
+</li>
+<li><p>使用TensorRT原生API搭建网络</p>
+<p>性能最优，惊喜网络控制，兼容性最好</p>
+</li>
+</ol>
+<p><img src="C:\Users\44104\AppData\Roaming\Typora\typora-user-images\image-20221021102210834.png" alt="image-20221021102210834" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<h3 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h3><ul>
+<li>构建阶段<ol>
+<li>建立Logger（日志记录器）</li>
+<li>建立Builder（网络元数据）和BuilderConfig（网络元数据的选项）</li>
+<li><code>创建Network（计算图内容）</code></li>
+<li>生成SerializeNetwork（网络的TRT内部表示）</li>
+</ol>
+</li>
+<li>运行阶段<ol>
+<li>建立Engine</li>
+<li>创建Context</li>
+<li>Buffer准备（Host端和Device端）</li>
+<li>Buffer拷贝 Host to Device</li>
+<li>执行推理（Execute）</li>
+<li>Buffer拷贝 Device to Host</li>
+<li>善后工作</li>
+</ol>
+</li>
+</ul>
+<h4 id="Logger（日志记录器）"><a href="#Logger（日志记录器）" class="headerlink" title="Logger（日志记录器）"></a>Logger（日志记录器）</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logger = trt.<span class="built_in">Logger</span>(trt.Logger.VERBOSE)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可选参数：<code>VERBOSE</code>、<code>INFO</code>、WARNING、ERROR、INTERNAL_ERROR，产生不同等级的日志，<code>详-&gt;简</code>（网络优化过程和网络优化结果的相关信息）</li>
+</ul>
+<h4 id="Builder引擎构建器"><a href="#Builder引擎构建器" class="headerlink" title="Builder引擎构建器"></a>Builder引擎构建器</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">builer = trt.<span class="built_in">Builder</span>(logger) </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>新版本仅作为构建引擎 的入口，不在用于设置相关网络属性</p>
+</li>
+<li><table>
+<thead>
+<tr>
+<th>常用成员</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>builder.max_batch_size &#x3D; 256</td>
+<td>指定最大Batch Size（Static Shape模式下使用）</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>Dynamic Shape</code> 模式必须用<code>builerConfig</code>及相关API</p>
+</li>
+</ul>
+<h4 id="BuilderConfig网络属性选项"><a href="#BuilderConfig网络属性选项" class="headerlink" title="BuilderConfig网络属性选项"></a>BuilderConfig网络属性选项</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config = builer.create_builder_config()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><table>
+<thead>
+<tr>
+<th>常用成员</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>config.max_workspace_size &#x3D; 1 &lt;&lt; 30</td>
+<td>指定构建期可用显存（单位：Byte）</td>
+</tr>
+<tr>
+<td>config.flag &#x3D; …</td>
+<td>设置标志位：如1 &lt;&lt; int(trt.BuilerFlag.FP16), 1&lt;&lt; int(trt.BuilerFlag.INT8), …</td>
+</tr>
+<tr>
+<td>config.int8_calibrator &#x3D; …</td>
+<td>指定calibrator</td>
+</tr>
+<tr>
+<td>config.set_static_sources（限制算法实现）&#x2F;set_timing_cache（节约构建时间）&#x2F;algorithm-selector（精确控制节点算法）&#x2F;…</td>
+<td>等等</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h4 id="Network网络具体构造"><a href="#Network网络具体构造" class="headerlink" title="Network网络具体构造"></a>Network网络具体构造</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">network = builder.<span class="built_in">create_network</span>()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>常见参数：</p>
+<p>1 &lt;&lt; int(tensorrt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH)，使用Explicit Batch模式</p>
+</li>
+<li><p>常用方法：</p>
+<ul>
+<li><code>network.add_input</code>(‘oneTensor’, trt.float32, (3, 4, 5)) <code>--&gt;</code> 标记网络输入标量</li>
+<li>convLayer &#x3D; <code>network.add_convolution_nd</code>(XXX) <code>--&gt;</code> 添加各种网络层</li>
+<li><code>network.mark_output</code>(convLayer.get_output(0)) <code>--&gt;</code> 添加网络输出张量</li>
+</ul>
+</li>
+<li><p>常用获取网络新消息的成员：</p>
+<ul>
+<li>network.name &#x2F; network.num_layers &#x2F; network.num_outputs</li>
+<li>network.has_implicit_batch_dimension &#x2F; network.has_explicit_precision</li>
+</ul>
+</li>
+</ul>
+<h5 id="Explicit-Batch模式-v-s-Implicit-Batch模式"><a href="#Explicit-Batch模式-v-s-Implicit-Batch模式" class="headerlink" title="Explicit Batch模式 v.s. Implicit Batch模式"></a>Explicit Batch模式 v.s. Implicit Batch模式</h5><ol>
+<li>TensorRT主流network构建方法，Implicit Batch模式builer.create_network(0)仅用作后向兼容</li>
+<li>所有张量显式包含Batch维度、比Implicit Batch模式多一维</li>
+<li>需要使用builder.create_network(1 &lt;&lt; int(tensorrt.NetworkDefinitionCreationflag.EXPLICIT_BATCH))</li>
+<li>Explicit Batch模式能做、Implicit Batch模式不能做的事举例：<ul>
+<li>Layer Normalization</li>
+<li>Reshape &#x2F; transpose &#x2F; Reduce over batch dimension</li>
+<li>Dynamic shape 模式</li>
+<li>Loop结构</li>
+<li>一些Layer的高级用法（如：ShuffleLayer.set_input）</li>
+</ul>
+</li>
+<li>从ONNX导入的模型也默认使用Explicit Batch模式</li>
+</ol>
+<h6 id="Dynamic-shape-模式"><a href="#Dynamic-shape-模式" class="headerlink" title="Dynamic shape 模式"></a>Dynamic shape 模式</h6><ul>
+<li>适用于输入张量形状在推理时才决定网络</li>
+<li>除了Batch维，其他维度也可以推理时决定</li>
+<li>需要Explicit Batch模式</li>
+<li>需要Optimazation Profile帮助网络优化</li>
+<li>需用context_binding-shape绑定实际输入数据形状</li>
+</ul>
+<h6 id="Profile指定输入张量大小范围"><a href="#Profile指定输入张量大小范围" class="headerlink" title="Profile指定输入张量大小范围"></a>Profile指定输入张量大小范围</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">profile = builder.create_optimization_profile()</span><br></pre></td></tr></table></figure>
+
+<p>常用方法：</p>
+<ul>
+<li>profile.set_shape(tensorName, minShape, commonShape, maxShape) <code>--&gt;</code> 给定输入张量的最小、最常见、最大尺寸</li>
+<li>config.add_optimization_profile(profile) <code>--&gt;</code> 将</li>
+</ul>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/04.%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8/TensorRT/TensorRT/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/04.%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8/TensorRT/TensorRT/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/04.%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89%E7%9A%84%E7%9B%B8%E6%9C%BA%E3%80%81%E9%95%9C%E5%A4%B4%E9%80%89%E5%9E%8B%E5%92%8C%E6%89%93%E5%85%89/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/04.%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89%E7%9A%84%E7%9B%B8%E6%9C%BA%E3%80%81%E9%95%9C%E5%A4%B4%E9%80%89%E5%9E%8B%E5%92%8C%E6%89%93%E5%85%89/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2020- 2024</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">星唯向导</span>
+        </div>
+    
+
+
+    <!--添加运行时间-->
+    <span id="sitetime"></span>
+    <script language=javascript>
+	    function siteTime(){
+		    window.setTimeout("siteTime()", 1000);
+		    var seconds = 1000;
+		    var minutes = seconds * 60;
+		    var hours = minutes * 60;
+		    var days = hours * 24;
+		    var years = days * 365;
+		    var today = new Date();
+		    var todayYear = today.getFullYear();
+		    var todayMonth = today.getMonth()+1;
+		    var todayDate = today.getDate();
+		    var todayHour = today.getHours();
+		    var todayMinute = today.getMinutes();
+		    var todaySecond = today.getSeconds();
+		/* 
+        Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		    var t1 = Date.UTC(2023,05,25,18,12,20); //北京时间2018-2-13 00:00:00
+		    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		    var diff = t2-t1;
+		    var diffYears = Math.floor(diff/years);
+		    var diffDays = Math.floor((diff/days)-diffYears*365);
+		    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	    }
+	    siteTime();
+    </script>
+    <!--// 添加运行时间-->
+
+      
+
+     
+
+    
+        <div class="trm-footer-item">
+            在年轻的飞奔里，拥抱迎面而来的风~
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        Article table of contents
+				<span id="post-toc-top">
+					TOP
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="TensorRT-NVIDIA(基于8.2.3)"><a rel="nofollow" class="trm-toc-link" href="#TensorRT-NVIDIA-基于8-2-3"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">TensorRT-NVIDIA(基于8.2.3)</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="简介"><a rel="nofollow" class="trm-toc-link" href="#简介"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">简介</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="工作"><a rel="nofollow" class="trm-toc-link" href="#工作"><span class="trm-toc-number">1.1.1.</span> <span class="trm-toc-text">工作</span></a></li><li class="trm-toc-item trm-toc-level-3" title="如何迁移部署已完成模型"><a rel="nofollow" class="trm-toc-link" href="#如何迁移部署已完成模型"><span class="trm-toc-number">1.1.2.</span> <span class="trm-toc-text">如何迁移部署已完成模型</span></a></li><li class="trm-toc-item trm-toc-level-3" title="基本流程"><a rel="nofollow" class="trm-toc-link" href="#基本流程"><span class="trm-toc-number">1.1.3.</span> <span class="trm-toc-text">基本流程</span></a></li></ol></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="Open toc">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.10"></script>
+
+</body>
+
+</html>

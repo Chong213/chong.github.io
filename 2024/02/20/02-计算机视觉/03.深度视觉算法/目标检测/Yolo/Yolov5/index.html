@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="Yolov5 https:&#x2F;&#x2F;blog.csdn.net&#x2F;nan355655600&#x2F;article&#x2F;details&#x2F;107852353  1、网络结构图 它和Yolov3的一些主要的不同点，并和Yolov4进行比较。（1）输入端：Mosaic数据增强、自适应锚框计算（2）Backbone：Focus结构，CSP结构（3）Neck：FPN+PAN结构（4）Prediction：GIOU_Loss 2">
+<meta property="og:type" content="article">
+<meta property="og:title">
+<meta property="og:url" content="http://example.com/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/Yolo/Yolov5/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="Yolov5 https:&#x2F;&#x2F;blog.csdn.net&#x2F;nan355655600&#x2F;article&#x2F;details&#x2F;107852353  1、网络结构图 它和Yolov3的一些主要的不同点，并和Yolov4进行比较。（1）输入端：Mosaic数据增强、自适应锚框计算（2）Backbone：Focus结构，CSP结构（3）Neck：FPN+PAN结构（4）Prediction：GIOU_Loss 2">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-02-20T08:24:05.212Z">
+<meta property="article:modified_time" content="2022-11-13T05:34:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":null,"root":"/","typed_text":null,"theme_version":"2.1.10","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","sticky":"TOP","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"The blog has been lovely to run undefined day"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2022-11-13 13:34:24"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.10" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            Cao<span>Chong</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        星唯向导
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/chong-zzxy" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont cg-gitee"></i>
+        </a>
+    
+        <a href="https://space.bilibili.com/271039719" title="BiliBili" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont icon-bilibili"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                name:
+            </div>
+            <div class="trm-label trm-label-light">
+                Caochong
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                from:
+            </div>
+            <div class="trm-label trm-label-light">
+                China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                born:
+            </div>
+            <div class="trm-label trm-label-light">
+                1999.01.10
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                love:
+            </div>
+            <div class="trm-label trm-label-light">
+                AI | life | 粘粘
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/20
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            16:24
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="Yolov5"><a href="#Yolov5" class="headerlink" title="Yolov5"></a>Yolov5</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/nan355655600/article/details/107852353">https://blog.csdn.net/nan355655600/article/details/107852353</a></p>
+</blockquote>
+<h2 id="1、网络结构图"><a href="#1、网络结构图" class="headerlink" title="1、网络结构图"></a>1、网络结构图</h2><p><img src="/./images/20201229210005719.png" alt="yolov5s" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>它和Yolov3的一些主要的不同点，并和Yolov4进行比较。<br>（1）输入端：Mosaic数据增强、自适应锚框计算<br>（2）Backbone：Focus结构，CSP结构<br>（3）Neck：FPN+PAN结构<br>（4）Prediction：GIOU_Loss</p>
+<h2 id="2、核心基础知识"><a href="#2、核心基础知识" class="headerlink" title="2、核心基础知识"></a>2、核心基础知识</h2><h3 id="2-1、输入端"><a href="#2-1、输入端" class="headerlink" title="2.1、输入端"></a>2.1、输入端</h3><h4 id="1）Mosaic数据增强："><a href="#1）Mosaic数据增强：" class="headerlink" title="1）Mosaic数据增强："></a>1）Mosaic数据增强：</h4><p><strong>随机缩放</strong>、<strong>随机裁剪</strong>、<strong>随机排布</strong>的方式进行拼接，对于<strong>小目标</strong>的检测效果还是很不错的。</p>
+<h4 id="2）自适应锚框计算："><a href="#2）自适应锚框计算：" class="headerlink" title="2）自适应锚框计算："></a>2）自适应锚框计算：</h4><p>在Yolo算法中，针对不同的数据集，都会有初始设定长宽的锚框。<br>在网络训练中，网络在初始锚框的基础上输出预测框，进而和真实框groundtruth进行比对，计算两者差距，再反向更新，迭代网络参数。因此初始锚框也是比较重要的一部分，比如<strong>Yolov5在Coco数据集上初始设定的锚框</strong>：</p>
+<p><img src="/./images/20200806235402224.png" alt="在这里插入图片描述" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>在<strong>Yolov3、Yolov4</strong>中，训练不同的数据集时，计算初始锚框的值是通过单独的程序运行的。<br>但<strong>Yolov5</strong>中将此功能嵌入到代码中，每次训练时，自适应的计算不同训练集中的<strong>最佳锚框值</strong>。<br>当然，如果觉得计算的锚框效果<strong>不是很好</strong>，也可以在代码中将<strong>自动计算锚框功能关闭</strong>。</p>
+<p><img src="/./images/20200806235505666.png" alt="在这里插入图片描述" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>控制的代码即<strong>train.py</strong>中上面一行代码，设置成<strong>False</strong>，每次训练时，不会自动计算。</p>
+<h4 id="3）自适应图片缩放"><a href="#3）自适应图片缩放" class="headerlink" title="3）自适应图片缩放"></a>3）自适应图片缩放</h4><p>在常用的目标检测算法中，不同的图片长宽都不相同，因此<strong>常用的方式</strong>是将原始图片统一缩放到一个<strong>标准尺寸</strong>，再送入检测网络中。<br>比如<strong>Yolo算法</strong>中常用<strong>416×416，608×608</strong>等尺寸，比如对下面<strong>800*600</strong>的图像进行变换。</p>
+<img src="./images/20200806235523642.png" alt="在这里插入图片描述" style="zoom:25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>作者认为，在项目实际使用时，很多图片的长宽比不同。<br>因此缩放填充后，两端的黑边大小都不同，而<strong>如果填充的比较多，则存在信息冗余，影响推理速度。</strong><br>因此在Yolov5代码中<strong>datasets.py</strong>的<strong>letterbox</strong>函数中进行了修改，对原始图像自适应的添加最少的黑边。</p>
+<img src="./images/20200806235538989.png" alt="在这里插入图片描述" style="zoom:25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>图像高度上两端的黑边变少了，在推理时，计算量也会减少，即目标检测速度会得到提升。<br>这种方式在之前github上Yolov3中也进行了讨论：<a target="_blank" rel="noopener" href="https://github.com/ultralytics/yolov3/issues/232">https://github.com/ultralytics/yolov3/issues/232</a></p>
+<p><strong>（1）计算缩放比例</strong>        <img src="./images/20200806235557816.png" alt="在这里插入图片描述" style="zoom:25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/> </p>
+<p>原始缩放尺寸是<strong>416×416</strong>，都除以原始图像的尺寸后，可以得到<strong>0.52</strong>，和<strong>0.69</strong>两个缩放系数，选择小的缩放系数<strong>0.52</strong>。</p>
+<p><strong>（2）计算缩放后的尺寸</strong><img src="./images/20200806235613863.png" alt="在这里插入图片描述" style="zoom:25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/> </p>
+<p>原始图片的长宽都乘以最小的缩放系数<strong>0.52</strong>，宽变成了<strong>416</strong>，而高变成了<strong>312</strong>。</p>
+<p><strong>（3）计算黑边填充数值</strong><img src="./images/2020102016434944.png" alt="在这里插入图片描述" style="zoom:25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/> </p>
+<p>将<strong>416-312&#x3D;104</strong>，得到原本需要填充的高度。再采用<strong>numpy中np.mod</strong>取余数的方式，得到<strong>8个像素</strong>，再<strong>除以2</strong>，即得到图片高度两端需要填充的数值。Yolov5中填充的是灰色，即（114,114,114），都是一样的效果。。<br>训练时没有采用缩减黑边的方式，还是采用传统填充的方式，即缩放到416×416大小。<br>只是在<strong>测试</strong>，使用模型推理时，才采用缩减黑边的方式，提高目标检测，推理的速度。<br>为什么np.mod函数的后面用32？因为Yolov5的网络经过5次下采样，而2的5次方，等于32。所以至少要去掉32的倍数，再进行取余。</p>
+<h3 id="2-2、Backbone"><a href="#2-2、Backbone" class="headerlink" title="2.2、Backbone"></a>2.2、Backbone</h3><h4 id="1）Focus结构"><a href="#1）Focus结构" class="headerlink" title="1）Focus结构"></a>1）Focus结构</h4><img src="./images/2020080623564279.png" alt="在这里插入图片描述" style="zoom: 50%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>其中比较关键是<strong>切片操作</strong>。比如右图的切片示意图，4×4×3的图像切片后变成2×2×12的特征图。<br>以Yolov5s的结构为例，原始<strong>608×608×3</strong>的图像输入Focus结构，采用切片操作，先变成<strong>304×304×12</strong>的特征图，再经过一次32个卷积核的卷积操作，最终变成304×304×32的特征图。<br><strong>需要注意的是：</strong>Yolov5s的Focus结构最后使用了32个卷积核，而其他三种结构，使用的数量有所增加，先注意下，后面会讲解到四种结构的不同点。</p>
+<blockquote>
+<p>Focus模块在v5中是图片进入backbone前，对图片进行切片操作，具体操作是在一张图片中每隔一个像素拿到一个值，类似于邻近下采样，这样就拿到了四张图片，四张图片互补，长的差不多，但是没有信息丢失，这样一来，将W、H信息就集中到了通道空间，输入通道扩充了4倍，即拼接起来的图片相对于原先的RGB三通道模式变成了12个通道，最后将得到的新图片再经过卷积操作，最终得到了没有信息丢失情况下的二倍下采样特征图（Focus下采样的参数量略多于Conv下采样，但是有一定提升效果）。</p>
+</blockquote>
+<h4 id="2）CSP结构"><a href="#2）CSP结构" class="headerlink" title="2）CSP结构"></a>2）CSP结构</h4><p><strong>Yolov5</strong>与<strong>Yolov4</strong>不同点在于，<strong>Yolov4</strong>中只有<strong>主干网络</strong>使用了<strong>CSP结构，</strong>而<strong>Yolov5</strong>中设计了两种<strong>CSP结构，</strong>以<strong>Yolov5s</strong>网络为例，以<strong>CSP1_X</strong>结构应用于<strong>Backbone主干网络</strong>，另一种<strong>CSP2_X</strong>结构则应用于<strong>Neck中</strong>。</p>
+<img src="./images/20201229210125245.png" alt="在这里插入图片描述" style="zoom: 33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<h3 id="2-3、Neck"><a href="#2-3、Neck" class="headerlink" title="2.3、Neck"></a>2.3、Neck</h3><p><strong>Yolov5</strong>和<strong>Yolov4</strong>的不同点在于，<strong>Yolov4</strong>的<strong>Neck</strong>中，采用的都是普通的卷积操作。<br>而<strong>Yolov5</strong>的<strong>Neck结构</strong>中，采用借鉴<strong>CSPNet</strong>设计的<strong>CSP2结构</strong>，<strong>加强网络特征融合的能力</strong></p>
+<img src="./images/20200815151848239.png" alt="在这里插入图片描述" style="zoom: 33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<h3 id="2-4、输出端"><a href="#2-4、输出端" class="headerlink" title="2.4、输出端"></a>2.4、输出端</h3><h4 id="1）Bounding-box损失函数"><a href="#1）Bounding-box损失函数" class="headerlink" title="1）Bounding box损失函数"></a>1）Bounding box损失函数</h4><p><strong>Yolov5</strong>中采用其中的<strong>GIOU_Loss</strong>做<strong>Bounding box</strong>的<strong>损失函数</strong>。</p>
+<p>而<strong>Yolov4</strong>中采用<strong>CIOU_Loss</strong>作为目标<strong>Bounding box</strong>的损失函数。</p>
+<h4 id="2）nms非极大值抑制"><a href="#2）nms非极大值抑制" class="headerlink" title="2）nms非极大值抑制"></a>2）nms非极大值抑制</h4><p>在目标检测的<strong>后处理过程</strong>中，针对很多<strong>目标框的筛选</strong>，通常需要<strong>nms操作</strong>。<br><strong>Yolov4</strong>在<strong>DIOU_Loss</strong>的基础上采用<strong>DIOU_nms</strong>的方式，而<strong>Yolov5</strong>中仍然采用<strong>加权nms</strong>的方式。</p>
+<p>在同样的参数情况下，将<strong>nms</strong>中<strong>IOU</strong>修改成<strong>DIOU_nms</strong>。对于一些<strong>遮挡重叠</strong>的目标，确实会有一些<strong>改进</strong>。</p>
+<h2 id="3、yolov5四种结构的不同点"><a href="#3、yolov5四种结构的不同点" class="headerlink" title="3、yolov5四种结构的不同点"></a>3、yolov5四种结构的不同点</h2><blockquote>
+<p>只有最上方的<strong>depth_multiple</strong>和<strong>width_multiple</strong>两个参数不同</p>
+</blockquote>
+<h3 id="3-1、四种结构的参数"><a href="#3-1、四种结构的参数" class="headerlink" title="3.1、四种结构的参数"></a>3.1、四种结构的参数</h3><ul>
+<li>yolov5s.yaml      <img src="/./images/20200807000034712.png" alt="yolov5s" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'> </li>
+<li>yolov5m.yaml——<img src="/./images/20200807000042731.png" alt="yolov5m" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'> </li>
+<li>yolov5l.yaml——<img src="/./images/20200807000050200.png" alt="yolov5l" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'> </li>
+<li>yolov5x.yaml——<img src="/./images/20200807000057477.png" alt="yolov5x" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></li>
+</ul>
+<h3 id="3-2、Yolov5网络结构"><a href="#3-2、Yolov5网络结构" class="headerlink" title="3.2、Yolov5网络结构"></a>3.2、Yolov5网络结构</h3><p><img src="/./images/20200807000109269.png" alt="在这里插入图片描述" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>在对网络结构进行解析时，<strong>yolo.py</strong>中下方的这一行代码将四种结构的<strong>depth_multiple</strong>，<strong>width_multiple</strong>提取出，赋值给<strong>gd</strong>，<strong>gw</strong>。后面主要对这<strong>gd</strong>，<strong>gw</strong>这两个参数进行讲解。<br><img src="/./images/20200807000120244.png" alt="在这里插入图片描述" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<h3 id="3-3、Yolov5四种网络的深度"><a href="#3-3、Yolov5四种网络的深度" class="headerlink" title="3.3、Yolov5四种网络的深度"></a>3.3、Yolov5四种网络的深度</h3><img src="./images/20200815154041184.png" alt="在这里插入图片描述" style="zoom: 33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>（1）不同网络的深度</p>
+<p>在上图中，大白画了两种CSP结构，CSP1和CSP2，其中CSP1结构主要应用于Backbone中，CSP2结构主要应用于Neck中。<br>需要注意的是，四种网络结构中每个CSP结构的深度都是不同的。</p>
+<ul>
+<li><p>a. 以Yolov5s为例，第一个CSP1中，使用了1个残差组件，因此是CSP1_1。</p>
+</li>
+<li><p>b. 在第二种CSP2结构中也是同样的方式，以第一个CSP2结构为例。<br>Yolov5s组件中使用了2×X&#x3D;2×1&#x3D;2个卷积，因为Ｘ&#x3D;1，所以使用了1组卷积，因此是CSP2_1。</p>
+</li>
+</ul>
+<p>（2）控制深度的代码<br>控制四种网络结构的核心代码是<strong>yolo.py</strong>中下面的代码，存在两个变量，<strong>n</strong>和<strong>gd</strong>。<br>我们再将<strong>n</strong>和<strong>gd</strong>带入计算，看每种网络的变化结果。</p>
+<p><img src="/./images/20200807000150182.png" alt="在这里插入图片描述" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>（3）验证控制深度的有效性<br>我们选择最小的yolov5s.yaml和中间的yolov5l.yaml两个网络结构，将gd(height_multiple)系数带入，看是否正确。</p>
+<img src="./images/20200807000206272.png" alt="在这里插入图片描述" style="zoom:25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>a. yolov5s.yaml<br>其中depth_multiple&#x3D;0.33，即gd&#x3D;0.33，而n则由上面红色框中的信息获得。<br>以上面网络框图中的第一个CSP1为例，即上面的第一个红色框。n等于第二个数值3。<br>而gd&#x3D;0.33，带入（2）中的计算代码，结果n&#x3D;1。因此第一个CSP1结构内只有1个残差组件，即CSP1_1。<br>第二个CSP1结构中，n等于第二个数值9，而gd&#x3D;0.33，带入（2）中计算，结果n&#x3D;3，因此第二个CSP1结构中有3个残差组件，即CSP1_3。<br>b. yolov5l.xml<br>其中depth_multiple&#x3D;1，即gd&#x3D;1<br>和上面的计算方式相同，第一个CSP1结构中，n&#x3D;3，带入代码中，结果n&#x3D;3，因此为CSP1_3。<br>下面第二个CSP1结构和第三个CSP1结构都是同样的原理。</p>
+<h3 id="3-4、Yolov5四种网络的宽度"><a href="#3-4、Yolov5四种网络的宽度" class="headerlink" title="3.4、Yolov5四种网络的宽度"></a>3.4、Yolov5四种网络的宽度</h3><p><img src="/./images/20200928170544172.png" alt="在这里插入图片描述" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>（1）不同网络的宽度<br>卷积核的数量都是不一样的，直接影响卷积后特征图的第三维度，即厚度。可理解成宽度。</p>
+<ul>
+<li><p>a. 以Yolov5s结构为例，第一个Focus结构中，最后卷积操作时，卷积核的数量是32个，因此经过Focus结构，特征图的大小变成304×304×32。</p>
+</li>
+<li><p>b. 后面三个卷积下采样操作也是同样的原理<br>四种不同结构的卷积核的数量不同，这也直接影响网络中比如CSP1结构，CSP2等结构，以及各个普通卷积，卷积操作时的卷积核数量也同步在调整，影响整体网络的计算量。<br>大家最好可以将结构图和前面第一部分四个网络的特征图链接，对应查看，思路会更加清晰。</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>当然卷积核的数量越多，特征图的厚度，即宽度越宽，网络提取特征的学习能力也越强。</strong></p>
+</blockquote>
+<p>（2）控制宽度的代码<br>在<strong>Yolov5</strong>的代码中，控制宽度的核心代码是<strong>yolo.py</strong>文件里面的这一行：</p>
+<p><img src="/./images/2020080700040690.png" alt="在这里插入图片描述" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>（3）验证控制宽度的有效性<br>我们还是选择最小的<strong>Yolov5s</strong>和中间的<strong>Yolov5l</strong>两个网络结构，将<strong>width_multiple系数</strong>带入，看是否正确。</p>
+<img src="./images/2020080700043431.png" alt="在这里插入图片描述" style="zoom:25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p><strong>a. yolov5s.yaml</strong><br>其中<strong>width_multiple&#x3D;0.5</strong>，即<strong>gw&#x3D;0.5</strong>。</p>
+<img src="./images/20200807000447812.png" alt="在这里插入图片描述" style="zoom:33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>以第一个卷积下采样为例，即Focus结构中下面的卷积操作。<br>按照上面Backbone的信息，我们知道Focus中，标准的c2&#x3D;64，而gw&#x3D;0.5，代入（2）中的计算公式，最后的结果&#x3D;32。即Yolov5s的Focus结构中，卷积下采样操作的卷积核数量为32个。<br>再计算后面的第二个卷积下采样操作，标准c2的值&#x3D;128，gw&#x3D;0.5，代入（2）中公式，最后的结果&#x3D;64，也是正确的。<br><strong>b. yolov5l.yaml</strong><br>其中width_multiple&#x3D;1，即gw&#x3D;1，而标准的c2&#x3D;64，代入上面（2）的计算公式中，可以得到Yolov5l的Focus结构中，卷积下采样操作的卷积核的数量为64个，而第二个卷积下采样的卷积核数量是128个。<br>另外的三个卷积下采样操作，以及Yolov5m，Yolov5x结构也是同样的计算方式。</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/Yolo/Yolox/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/Yolo/Yolox/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/Yolo/Yolo%20v1-v4/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/03.%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89%E7%AE%97%E6%B3%95/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/Yolo/Yolo%20v1-v4/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2020- 2024</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">星唯向导</span>
+        </div>
+    
+
+
+    <!--添加运行时间-->
+    <span id="sitetime"></span>
+    <script language=javascript>
+	    function siteTime(){
+		    window.setTimeout("siteTime()", 1000);
+		    var seconds = 1000;
+		    var minutes = seconds * 60;
+		    var hours = minutes * 60;
+		    var days = hours * 24;
+		    var years = days * 365;
+		    var today = new Date();
+		    var todayYear = today.getFullYear();
+		    var todayMonth = today.getMonth()+1;
+		    var todayDate = today.getDate();
+		    var todayHour = today.getHours();
+		    var todayMinute = today.getMinutes();
+		    var todaySecond = today.getSeconds();
+		/* 
+        Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		    var t1 = Date.UTC(2023,05,25,18,12,20); //北京时间2018-2-13 00:00:00
+		    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		    var diff = t2-t1;
+		    var diffYears = Math.floor(diff/years);
+		    var diffDays = Math.floor((diff/days)-diffYears*365);
+		    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	    }
+	    siteTime();
+    </script>
+    <!--// 添加运行时间-->
+
+      
+
+     
+
+    
+        <div class="trm-footer-item">
+            在年轻的飞奔里，拥抱迎面而来的风~
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        Article table of contents
+				<span id="post-toc-top">
+					TOP
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="Yolov5"><a rel="nofollow" class="trm-toc-link" href="#Yolov5"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">Yolov5</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="1、网络结构图"><a rel="nofollow" class="trm-toc-link" href="#1、网络结构图"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">1、网络结构图</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2、核心基础知识"><a rel="nofollow" class="trm-toc-link" href="#2、核心基础知识"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">2、核心基础知识</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="2.1、输入端"><a rel="nofollow" class="trm-toc-link" href="#2-1、输入端"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">2.1、输入端</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.2、Backbone"><a rel="nofollow" class="trm-toc-link" href="#2-2、Backbone"><span class="trm-toc-number">1.2.2.</span> <span class="trm-toc-text">2.2、Backbone</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.3、Neck"><a rel="nofollow" class="trm-toc-link" href="#2-3、Neck"><span class="trm-toc-number">1.2.3.</span> <span class="trm-toc-text">2.3、Neck</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.4、输出端"><a rel="nofollow" class="trm-toc-link" href="#2-4、输出端"><span class="trm-toc-number">1.2.4.</span> <span class="trm-toc-text">2.4、输出端</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="3、yolov5四种结构的不同点"><a rel="nofollow" class="trm-toc-link" href="#3、yolov5四种结构的不同点"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">3、yolov5四种结构的不同点</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="3.1、四种结构的参数"><a rel="nofollow" class="trm-toc-link" href="#3-1、四种结构的参数"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">3.1、四种结构的参数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.2、Yolov5网络结构"><a rel="nofollow" class="trm-toc-link" href="#3-2、Yolov5网络结构"><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">3.2、Yolov5网络结构</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.3、Yolov5四种网络的深度"><a rel="nofollow" class="trm-toc-link" href="#3-3、Yolov5四种网络的深度"><span class="trm-toc-number">1.3.3.</span> <span class="trm-toc-text">3.3、Yolov5四种网络的深度</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.4、Yolov5四种网络的宽度"><a rel="nofollow" class="trm-toc-link" href="#3-4、Yolov5四种网络的宽度"><span class="trm-toc-number">1.3.4.</span> <span class="trm-toc-text">3.4、Yolov5四种网络的宽度</span></a></li></ol></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="Open toc">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.10"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="空洞卷积优点：在不做pooling损失信息和相同的计算条件下的情况下，加大了感受野，让每个卷积输出都包含较大范围的信息。空洞卷积经常用在实时图像分割中。当网络层需要较大的感受野，但计算资源有限而无法提高卷积核数量或大小时，可以考虑空洞卷积。 空洞卷积（dilated convolution）是针对图像语义分割问题中下采样会降低图像分辨率、丢失信息而提出的一种卷积思路。利用添加空洞扩大感受野，让原本">
+<meta property="og:type" content="article">
+<meta property="og:title">
+<meta property="og:url" content="http://example.com/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/CNN%E6%A6%82%E5%BF%B5/%E5%8D%B7%E7%A7%AF%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="空洞卷积优点：在不做pooling损失信息和相同的计算条件下的情况下，加大了感受野，让每个卷积输出都包含较大范围的信息。空洞卷积经常用在实时图像分割中。当网络层需要较大的感受野，但计算资源有限而无法提高卷积核数量或大小时，可以考虑空洞卷积。 空洞卷积（dilated convolution）是针对图像语义分割问题中下采样会降低图像分辨率、丢失信息而提出的一种卷积思路。利用添加空洞扩大感受野，让原本">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-02-20T08:24:04.560Z">
+<meta property="article:modified_time" content="2022-12-01T13:08:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":null,"root":"/","typed_text":null,"theme_version":"2.1.10","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","sticky":"TOP","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"The blog has been lovely to run undefined day"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2022-12-01 21:08:32"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.10" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            Cao<span>Chong</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        星唯向导
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/chong-zzxy" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont cg-gitee"></i>
+        </a>
+    
+        <a href="https://space.bilibili.com/271039719" title="BiliBili" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont icon-bilibili"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                name:
+            </div>
+            <div class="trm-label trm-label-light">
+                Caochong
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                from:
+            </div>
+            <div class="trm-label trm-label-light">
+                China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                born:
+            </div>
+            <div class="trm-label trm-label-light">
+                1999.01.10
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                love:
+            </div>
+            <div class="trm-label trm-label-light">
+                AI | life | 粘粘
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/20
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            16:24
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h2 id="空洞卷积"><a href="#空洞卷积" class="headerlink" title="空洞卷积"></a>空洞卷积</h2><p>优点：在不做pooling损失信息和相同的计算条件下的情况下，加大了感受野，让每个卷积输出都包含较大范围的信息。空洞卷积经常用在实时图像分割中。当网络层需要较大的感受野，但<strong>计算资源有限而无法提高卷积核数量或大小时</strong>，可以考虑空洞卷积。</p>
+<p>空洞卷积（dilated convolution）是针对图像语义分割问题中下采样会降低图像分辨率、丢失信息而提出的一种卷积思路。利用添加空洞扩大感受野，让原本3x3的卷积核，在相同参数量和计算量下拥有5x5（dilated rate &#x3D;2）或者更大的感受野，从而无需下采样。扩张卷积（dilated convolutions）又名空洞卷积（atrous convolutions），向卷积层引入了一个称为 “扩张率(dilation rate)”的新参数，该参数定义了卷积核处理数据时各值的间距。换句话说，相比原来的标准卷积，扩张卷积（dilated convolution） 多了一个hyper-parameter（超参数）称之为dilation rate（扩张率），指的是kernel各点之前的间隔数量，【正常的convolution 的 dilatation rate为 1】。</p>
+<img src="./images/空洞卷积.jpg" alt="img" style="zoom: 25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p><img src="/./images/%E7%A9%BA%E6%B4%9E%E5%8D%B7%E7%A7%AF-%E8%AE%A1%E7%AE%97.jpg" alt="img" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<img src="./images/空洞卷积-例.png" alt="img" style="zoom: 33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<h3 id="空间卷积的动态过程"><a href="#空间卷积的动态过程" class="headerlink" title="空间卷积的动态过程"></a>空间卷积的动态过程</h3><p><img src="/./images/%E7%A9%BA%E6%B4%9E%E5%8D%B7%E7%A7%AF%E5%8A%A8%E5%9B%BE.gif" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>上图是一个扩张率为2的3×3卷积核，感受野与5×5的卷积核相同，而且仅需要9个参数。你可以把它想象成一个5×5的卷积核，每隔一行或一列删除一行或一列。</p>
+<p><img src="./images/空洞卷积-动1.png" alt="img" style="zoom: 25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>	<img src="./images/空洞卷积-动2.png" alt="img" style="zoom: 25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>	<img src="./images/空洞卷积-动3.png" alt="img" style="zoom: 25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/> </p>
+<p><img src="./images/空洞卷积-动4.png" alt="img" style="zoom: 25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>	<img src="./images/空洞卷积-动5.png" alt="img" style="zoom: 25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>	<img src="./images/空洞卷积-动6.png" alt="img" style="zoom: 25%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>  </p>
+<h2 id="深度卷积（depthwise-Conv）"><a href="#深度卷积（depthwise-Conv）" class="headerlink" title="深度卷积（depthwise Conv）"></a>深度卷积（depthwise Conv）</h2><p>深度卷积就是对每个channel单独进行卷积操作，输出的feature map的channle和之前是一样的。</p>
+<img src="./images/深度卷积.png" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+
+
+
+
+
+<h2 id="逐点卷积（pointwise-Conv）"><a href="#逐点卷积（pointwise-Conv）" class="headerlink" title="逐点卷积（pointwise Conv）"></a>逐点卷积（pointwise Conv）</h2><p>逐点卷积就是执行1x1卷积，来进行单点上的特征提取。</p>
+<h2 id="空间可分离卷积"><a href="#空间可分离卷积" class="headerlink" title="空间可分离卷积"></a>空间可分离卷积</h2><p>主要在卷积核上操作。例如将一个3x3的卷积拆分成1x3和3x1两个卷积</p>
+<h2 id="深度可分离卷积（depthwise-separable-Convolution）"><a href="#深度可分离卷积（depthwise-separable-Convolution）" class="headerlink" title="深度可分离卷积（depthwise separable Convolution）"></a>深度可分离卷积（depthwise separable Convolution）</h2><p>主要是将普通的卷积操作划分为两个步骤：深度卷积和逐点卷积，其目的是<strong>减少计算时的参数量和计算量</strong>。</p>
+<p>首先，我们将深度卷积应用于输入层。</p>
+<p><strong>1、</strong>但我们不使用 2D 卷积中大小为 3×3×3 的单个过滤器，而是分开使用 3 个核。每个过滤器的大小为 3×3×1。<br>每个核与输入层的一个通道卷积（仅一个通道，而非所有通道！）。每个这样的卷积都能提供大小为 5×5×1 的映射图。<br>然后我们将这些映射图堆叠在一起，创建一个 5×5×3 的图像。经过这个操作之后，我们得到大小为 5×5×3 的输出。<br>现在我们可以降低空间维度了，但深度还是和之前一样。</p>
+<img src="./images/深度可分离卷积-1.jpg" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+
+<p><strong>2、</strong>为了扩展深度，我们应用一个核大小为 1×1×3 的 1×1 卷积。将 5×5×3 的输入图像与每个 1×1×3 的核卷积，可得到大小为 5×5×1 的映射图。</p>
+<img src="./images/深度可分离卷积-2.jpg" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+
+<p>因此，在应用了 128 个 1×1 卷积之后，我们得到大小为 5×5×128 的层。<img src="./images/深度可分离卷积-3.jpg" alt="深度可分离卷积" style="zoom: 50%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/></p>
+<p><strong>深度可分卷积的整个过程：</strong> </p>
+<img src="./images/深度可分离卷积-4.jpg" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+
+<p>注：使用深度可分卷积有什么坏处吗？当然是有的。深度可分卷积会降低卷积中参数的数量。因此，对于较小的模型而言，如果用深度可分卷积替代 2D 卷积，模型的能力可能会显著下降。因此，得到的模型可能是次优的。但是，如果使用得当，深度可分卷积能在不降低你的模型性能的前提下帮助你实现效率提升。</p>
+<h2 id="分组卷积"><a href="#分组卷积" class="headerlink" title="分组卷积"></a>分组卷积</h2><p>实现分组卷积的主要原因是让网络训练可在 2 个内存有限（每个 GPU 有 1.5 GB 内存）的 GPU 上进行。下面的 AlexNet 表明在大多数层中都有两个分开的卷积路径。这是在两个 GPU 上执行模型并行化（当然如果可以使用更多 GPU，还能执行多 GPU 并行化）。</p>
+<h2 id="可变形卷积（Deformable-Convolution）"><a href="#可变形卷积（Deformable-Convolution）" class="headerlink" title="可变形卷积（Deformable Convolution）"></a>可变形卷积（Deformable Convolution）</h2><p>可变形卷积是在卷积的基础上，对每一个计算的位置增加一个学习到的offset向量，这样可以打破CNN固定的几何结构，使得感受野更大且更加灵活适用。其结构如下图所示：</p>
+<img src="./images/可变性卷积.png" alt="可变性卷积" style="zoom: 33%;"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'/>
+
+<p>如上图，在做deformable卷积之前，需要两个部分输入：一个是input feature map，另一部分就是预测的offset，这个offset对于feature上每个采样点添加一个二维的偏置offset，在加上这个偏置以后，新的位置会是一个小数，此时采用双线性插值对该点feature进行预测。</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/CNN%E6%A6%82%E5%BF%B5/%E6%9D%83%E5%80%BC%E5%85%B1%E4%BA%AB/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/CNN%E6%A6%82%E5%BF%B5/%E6%9D%83%E5%80%BC%E5%85%B1%E4%BA%AB/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/CNN%E6%A6%82%E5%BF%B5/%E4%B8%8A%E4%B8%8B%E9%87%87%E6%A0%B7%E5%8D%B7%E7%A7%AF%E6%B1%A0%E5%8C%96/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/02.%E9%80%9A%E7%94%A8%E5%9F%BA%E7%A1%80%E6%8B%93%E5%B1%95/CNN%E6%A6%82%E5%BF%B5/%E4%B8%8A%E4%B8%8B%E9%87%87%E6%A0%B7%E5%8D%B7%E7%A7%AF%E6%B1%A0%E5%8C%96/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2020- 2024</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">星唯向导</span>
+        </div>
+    
+
+
+    <!--添加运行时间-->
+    <span id="sitetime"></span>
+    <script language=javascript>
+	    function siteTime(){
+		    window.setTimeout("siteTime()", 1000);
+		    var seconds = 1000;
+		    var minutes = seconds * 60;
+		    var hours = minutes * 60;
+		    var days = hours * 24;
+		    var years = days * 365;
+		    var today = new Date();
+		    var todayYear = today.getFullYear();
+		    var todayMonth = today.getMonth()+1;
+		    var todayDate = today.getDate();
+		    var todayHour = today.getHours();
+		    var todayMinute = today.getMinutes();
+		    var todaySecond = today.getSeconds();
+		/* 
+        Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		    var t1 = Date.UTC(2023,05,25,18,12,20); //北京时间2018-2-13 00:00:00
+		    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		    var diff = t2-t1;
+		    var diffYears = Math.floor(diff/years);
+		    var diffDays = Math.floor((diff/days)-diffYears*365);
+		    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	    }
+	    siteTime();
+    </script>
+    <!--// 添加运行时间-->
+
+      
+
+     
+
+    
+        <div class="trm-footer-item">
+            在年轻的飞奔里，拥抱迎面而来的风~
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        Article table of contents
+				<span id="post-toc-top">
+					TOP
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-2" title="空洞卷积"><a rel="nofollow" class="trm-toc-link" href="#空洞卷积"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">空洞卷积</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="空间卷积的动态过程"><a rel="nofollow" class="trm-toc-link" href="#空间卷积的动态过程"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">空间卷积的动态过程</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="深度卷积（depthwise Conv）"><a rel="nofollow" class="trm-toc-link" href="#深度卷积（depthwise-Conv）"><span class="trm-toc-number">2.</span> <span class="trm-toc-text">深度卷积（depthwise Conv）</span></a></li><li class="trm-toc-item trm-toc-level-2" title="逐点卷积（pointwise Conv）"><a rel="nofollow" class="trm-toc-link" href="#逐点卷积（pointwise-Conv）"><span class="trm-toc-number">3.</span> <span class="trm-toc-text">逐点卷积（pointwise Conv）</span></a></li><li class="trm-toc-item trm-toc-level-2" title="空间可分离卷积"><a rel="nofollow" class="trm-toc-link" href="#空间可分离卷积"><span class="trm-toc-number">4.</span> <span class="trm-toc-text">空间可分离卷积</span></a></li><li class="trm-toc-item trm-toc-level-2" title="深度可分离卷积（depthwise separable Convolution）"><a rel="nofollow" class="trm-toc-link" href="#深度可分离卷积（depthwise-separable-Convolution）"><span class="trm-toc-number">5.</span> <span class="trm-toc-text">深度可分离卷积（depthwise separable Convolution）</span></a></li><li class="trm-toc-item trm-toc-level-2" title="分组卷积"><a rel="nofollow" class="trm-toc-link" href="#分组卷积"><span class="trm-toc-number">6.</span> <span class="trm-toc-text">分组卷积</span></a></li><li class="trm-toc-item trm-toc-level-2" title="可变形卷积（Deformable Convolution）"><a rel="nofollow" class="trm-toc-link" href="#可变形卷积（Deformable-Convolution）"><span class="trm-toc-number">7.</span> <span class="trm-toc-text">可变形卷积（Deformable Convolution）</span></a></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="Open toc">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.10"></script>
+
+</body>
+
+</html>

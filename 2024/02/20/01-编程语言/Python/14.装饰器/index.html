@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="Python内置装饰器 https:&#x2F;&#x2F;www.bilibili.com&#x2F;read&#x2F;cv22718929  装饰器可以在编写更少、更简单代码的基础上实现复杂的逻辑，并在任何地方都能调用，是体现“Python 之禅”的最佳Python特性 1、简介装饰器指的是，定义一个函数，这个函数用来为其他函数添加额外的功能，即拓展原有函数功能的一种函数。 原因：开放封闭原则（对拓展功能开放，对修改源代码封闭）不">
+<meta property="og:type" content="article">
+<meta property="og:title">
+<meta property="og:url" content="http://example.com/2024/02/20/01-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/14.%E8%A3%85%E9%A5%B0%E5%99%A8/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="Python内置装饰器 https:&#x2F;&#x2F;www.bilibili.com&#x2F;read&#x2F;cv22718929  装饰器可以在编写更少、更简单代码的基础上实现复杂的逻辑，并在任何地方都能调用，是体现“Python 之禅”的最佳Python特性 1、简介装饰器指的是，定义一个函数，这个函数用来为其他函数添加额外的功能，即拓展原有函数功能的一种函数。 原因：开放封闭原则（对拓展功能开放，对修改源代码封闭）不">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-02-20T08:24:02.888Z">
+<meta property="article:modified_time" content="2023-05-14T08:50:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.10' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":null,"root":"/","typed_text":null,"theme_version":"2.1.10","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","sticky":"TOP","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"The blog has been lovely to run undefined day"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-05-14 16:50:40"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.10" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            Cao<span>Chong</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        星唯向导
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/chong-zzxy" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont cg-gitee"></i>
+        </a>
+    
+        <a href="https://space.bilibili.com/271039719" title="BiliBili" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont icon-bilibili"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                name:
+            </div>
+            <div class="trm-label trm-label-light">
+                Caochong
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                from:
+            </div>
+            <div class="trm-label trm-label-light">
+                China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                born:
+            </div>
+            <div class="trm-label trm-label-light">
+                1999.01.10
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                love:
+            </div>
+            <div class="trm-label trm-label-light">
+                AI | life | 粘粘
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/20
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            16:24
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="Python内置装饰器"><a href="#Python内置装饰器" class="headerlink" title="Python内置装饰器"></a>Python内置装饰器</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv22718929">https://www.bilibili.com/read/cv22718929</a></p>
+</blockquote>
+<p>装饰器可以在编写更少、更简单代码的基础上实现复杂的逻辑，并在任何地方都能调用，是体现“Python 之禅”的最佳Python特性</p>
+<h2 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h2><p>装饰器指的是，定义一个函数，这个函数用来为其他函数添加额外的功能，即拓展原有函数功能的一种函数。</p>
+<p>原因：开放封闭原则（对拓展功能开放，对修改源代码封闭）不修改源代码的基础上为对象添加新功能。</p>
+<p>用于以下场景：插入日志、性能测试、事务处理、缓存、权限校验</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例子</span></span><br><span class="line"><span class="comment"># 为函数添加一个统计运行时长的功能</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">how_much_time</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>():</span><br><span class="line">        t_start = time.time()</span><br><span class="line">        func()</span><br><span class="line">        t_end = time.time()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;一共花费了&#123;0&#125;秒时间&quot;</span>.<span class="built_in">format</span>(t_end - t_start, ))</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line">    <span class="comment"># 将增加的新功能代码以及被装饰函数运行代码func()一同打包返回，返回的是一个内部函数，这个被返回的函数就是装饰器</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sleep_5s</span>():</span><br><span class="line">    time.sleep(<span class="number">5</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%d秒结束了&quot;</span> % (<span class="number">5</span>,))</span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sleep_6s</span>():</span><br><span class="line">    time.sleep(<span class="number">6</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%d秒结束了&quot;</span> % (<span class="number">6</span>,))</span><br><span class="line"> </span><br><span class="line">sleep_5s = how_much_time(sleep_5s)</span><br><span class="line"><span class="comment"># 因为sleep_5s函数的功能就是睡5秒钟，虽然增加了统计运行时间的功能，但是他本身功能没变(还是睡5秒钟)，所以仍然用原来函数名接收增加功能了的自己</span></span><br><span class="line">sleep_6s = how_much_time(sleep_6s)</span><br><span class="line"> </span><br><span class="line">t1 = threading.Thread(target=sleep_5s)</span><br><span class="line">t2 = threading.Thread(target=sleep_6s)</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br><span class="line"><span class="comment"># 5秒结束了</span></span><br><span class="line"><span class="comment"># 一共花费了5.014161109924316秒时间</span></span><br><span class="line"><span class="comment"># 6秒结束了</span></span><br><span class="line"><span class="comment"># 一共花费了6.011810302734375秒时间</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>语法糖写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 为函数添加一个统计运行时长的功能</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">how_much_time</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>():</span><br><span class="line">        t_start = time.time()</span><br><span class="line">        func()</span><br><span class="line">        t_end = time.time()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;一共花费了&#123;0&#125;秒时间&quot;</span>.<span class="built_in">format</span>(t_end - t_start, ))</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta">@how_much_time</span></span><br><span class="line"><span class="comment"># @how_much_time等价于sleep_5s = how_much_time(sleep_5s)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sleep_5s</span>():</span><br><span class="line">    time.sleep(<span class="number">5</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%d秒结束了&quot;</span> % (<span class="number">5</span>,))</span><br><span class="line"> </span><br><span class="line"><span class="meta">@how_much_time</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sleep_6s</span>():</span><br><span class="line">    time.sleep(<span class="number">6</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%d秒结束了&quot;</span> % (<span class="number">6</span>,))</span><br><span class="line"> </span><br><span class="line">t1 = threading.Thread(target=sleep_5s)</span><br><span class="line">t2 = threading.Thread(target=sleep_6s)</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>一个函数两个装饰器的执行顺序：</p>
+<p><img src="/images/%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E4%B8%A4%E4%B8%AA%E8%A3%85%E9%A5%B0%E5%99%A8.png" alt="img" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<h2 id="2、内置装饰器"><a href="#2、内置装饰器" class="headerlink" title="2、内置装饰器"></a>2、内置装饰器</h2><h3 id="1、-lru-cache：通过缓存加速程序"><a href="#1、-lru-cache：通过缓存加速程序" class="headerlink" title="1、@lru_cache：通过缓存加速程序"></a>1、@lru_cache：通过缓存加速程序</h3><p>使用缓存技巧加速Python函数的最简单方法是使用<code>@lru_cache</code>装饰器</p>
+<p>这个装饰器可以用来缓存一个函数的结果，这样后续调用相同参数的函数就不会再执行了</p>
+<p>它对于<code>计算量大或使用相同参数频繁调用的函数</code>特别有用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache <span class="comment"># 导入</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">maxsize=<span class="literal">None</span></span>) </span><span class="comment"># 优化</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">return</span> fibonacci(n - <span class="number">1</span>) + fibonacci(n - <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">start_time = time.perf_counter()</span><br><span class="line"><span class="built_in">print</span>(fibonacci(<span class="number">30</span>))</span><br><span class="line">end_time = time.perf_counter()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;The execution time: <span class="subst">&#123;end_time - start_time:<span class="number">.8</span>f&#125;</span> seconds&quot;</span>)</span><br><span class="line"><span class="comment"># 未添加装饰器速度 == The execution time: 0.18129450 seconds</span></span><br><span class="line"><span class="comment"># 已添加装饰器速度 == The execution time: 0.00002990 second</span></span><br></pre></td></tr></table></figure>
+
+<p><code>@lru_cache</code>装饰器有一个<code>maxsize</code>参数，指定存储在缓存中的最大结果数</p>
+<p>当缓存已满并且需要存储新结果时，最近最久未使用的结果将从缓存中弹出</p>
+<p>这称为最近最久未使用 (Least Recently Used，LRU) 策略</p>
+<p>默认情况下，<code>maxsize</code>设置为<code>128</code></p>
+<p>如果将其设置为<code>None</code>，如示例，LRU 功能将被禁用，并且缓存可以无限增长</p>
+<h3 id="2-total-ordering：类装饰器，填充缺失的比较方法"><a href="#2-total-ordering：类装饰器，填充缺失的比较方法" class="headerlink" title="2. @total_ordering：类装饰器，填充缺失的比较方法"></a>2. @total_ordering：类装饰器，填充缺失的比较方法</h3><p>来自<code>functools</code>模块的<code>@total_ordering</code>装饰器，用于根据定义的方法为Python类生成缺少的比较方法</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> total_ordering</span><br><span class="line"></span><br><span class="line"><span class="meta">@total_ordering</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, grade</span>):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.grade = grade</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> self.grade == other.grade</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__lt__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> self.grade &lt; other.grade</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">student1 = Student(<span class="string">&quot;Alice&quot;</span>, <span class="number">85</span>)</span><br><span class="line">student2 = Student(<span class="string">&quot;Bob&quot;</span>, <span class="number">75</span>)</span><br><span class="line">student3 = Student(<span class="string">&quot;Charlie&quot;</span>, <span class="number">85</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(student1 &lt; student2)  <span class="comment"># False</span></span><br><span class="line"><span class="built_in">print</span>(student1 &gt; student2)  <span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(student1 == student3)  <span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(student1 &lt;= student3) <span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(student3 &gt;= student2) <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+<p>如上所示，在<code>Student</code>类中没有定义<code>__ge__</code>、<code>__gt__ </code>和 <code>__le__ </code>方法</p>
+<p>但是，<code>@total_ordering</code>的存在，让我们在不同实例之间的比较结果都是正确的，优点显而易见</p>
+<ul>
+<li>可以使代码更清晰并节省时间，因为不需要写所有的比较方法</li>
+<li>一些旧类可能没有定义足够的比较方法，<code>@total_ordering</code>装饰器确保使用安全</li>
+</ul>
+<h3 id="3-contextmanager：制作定制的上下文管理器"><a href="#3-contextmanager：制作定制的上下文管理器" class="headerlink" title="3. @contextmanager：制作定制的上下文管理器"></a>3. @contextmanager：制作定制的上下文管理器</h3><p>Python提供上下文管理器机制来帮助正确的管理资源</p>
+<p>例如，下面的代码实现了一个简单的自定义上下文管理器，可以在文件打开或关闭时打印相应的信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> contextlib <span class="keyword">import</span> contextmanager</span><br><span class="line"></span><br><span class="line"><span class="meta">@contextmanager</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">file_manager</span>(<span class="params">filename, mode</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The file is opening...&quot;</span>)</span><br><span class="line">    file = <span class="built_in">open</span>(filename,mode)</span><br><span class="line">    <span class="keyword">yield</span> file</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The file is closing...&quot;</span>)</span><br><span class="line">    file.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> file_manager(<span class="string">&#x27;test.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(<span class="string">&#x27;Yang is writing!&#x27;</span>)</span><br><span class="line"><span class="comment"># The file is opening...</span></span><br><span class="line"><span class="comment"># The file is closing...</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-property：为Python类设置getter和setter"><a href="#4-property：为Python类设置getter和setter" class="headerlink" title="4. @property：为Python类设置getter和setter"></a>4. @property：为Python类设置getter和setter</h3><p>getter和setter是面向对象编程(OOP)中的重要概念</p>
+<p>对于类的每个实例变量，getter方法返回它的值（访问器），而setter方法设置或更新它的值（修改器）</p>
+<p>二者用于保护数据不被直接和意外地访问或修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self._score = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">score</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self._score</span><br><span class="line"></span><br><span class="line"><span class="meta">    @score.setter</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">score</span>(<span class="params">self, s</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="number">0</span> &lt;= s &lt;= <span class="number">100</span>:</span><br><span class="line">            self._score = s</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;The score must be between 0 ~ 100!&#x27;</span>)</span><br><span class="line"></span><br><span class="line">Yang = Student()</span><br><span class="line"></span><br><span class="line">Yang.score=<span class="number">99</span></span><br><span class="line"><span class="built_in">print</span>(Yang.score)</span><br><span class="line"><span class="comment"># 99</span></span><br><span class="line"></span><br><span class="line">Yang.score = <span class="number">999</span></span><br><span class="line"><span class="comment"># ValueError: The score must be between 0 ~ 100!</span></span><br></pre></td></tr></table></figure>
+
+<p>如上所示，<code>score</code>变量不能设置为 999，这是一个无意义的数字</p>
+<p>因为使用<code>@property</code>装饰器在setter函数中限制了它的可接受范围</p>
+<h3 id="5-cached-property：将方法的结果缓存为属性"><a href="#5-cached-property：将方法的结果缓存为属性" class="headerlink" title="5. @cached_property：将方法的结果缓存为属性"></a>5. @cached_property：将方法的结果缓存为属性</h3><p>Python3.8为<code>functool</code>模块引入了一个新的强大装饰器——<code>@cached_property</code></p>
+<p>可以将一个类的方法转换为一个属性，该属性的值计算一次，然后在实例的生命周期内作为普通属性缓存</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> cached_property</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Circle</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, radius</span>):</span><br><span class="line">        self.radius = radius</span><br><span class="line"></span><br><span class="line"><span class="meta">    @cached_property</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">area</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">3.14</span> * self.radius ** <span class="number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">circle = Circle(<span class="number">10</span>)</span><br><span class="line"><span class="built_in">print</span>(circle.area)</span><br><span class="line"><span class="comment"># prints 314.0</span></span><br><span class="line"><span class="built_in">print</span>(circle.area)</span><br><span class="line"><span class="comment"># returns the cached result (314.0) directly</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，通过<code>@cached_property</code>修饰了<code>area</code>方法</p>
+<p>所以没有对同一个不变实例的<code>circle.area</code>进行重复计算</p>
+<h3 id="6-classmethod：在Python类中定义类方法"><a href="#6-classmethod：在Python类中定义类方法" class="headerlink" title="6. @classmethod：在Python类中定义类方法"></a>6. @classmethod：在Python类中定义类方法</h3><p>在Python类中，有3种可能的方法类型：</p>
+<ul>
+<li>实例方法：绑定到实例的方法。可以访问和修改实例数据。在类的实例上调用实例方法，可以通过<code>self</code>参数访问实例数据</li>
+<li>类方法：绑定到类的方法。不能修改实例数据。在类本身上调用类方法，接收类作为第一个参数，通常命名为<code>cls</code></li>
+<li>静态方法：未绑定到实例或类的方法</li>
+</ul>
+<p>实例方法可以定义为普通的Python函数，只要第一个参数是<code>self</code></p>
+<p>但是，要定义一个类方法，需要使用<code>@classmethod</code>装饰器</p>
+<p>为了演示，以下示例定义了一个类方法，可用于通过radius获取<code>Circle</code>实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Circle</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, radius</span>):</span><br><span class="line">        self.radius = radius</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">from_diameter</span>(<span class="params">cls, diameter</span>):</span><br><span class="line">        <span class="keyword">return</span> cls(diameter / <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">diameter</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.radius * <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @diameter.setter</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">diameter</span>(<span class="params">self, diameter</span>):</span><br><span class="line">        self.radius = diameter / <span class="number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c = Circle.from_diameter(<span class="number">8</span>)</span><br><span class="line"><span class="built_in">print</span>(c.radius)  <span class="comment"># 4.0</span></span><br><span class="line"><span class="built_in">print</span>(c.diameter)  <span class="comment"># 8.0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-staticmethod：在Python类中定义静态方法"><a href="#7-staticmethod：在Python类中定义静态方法" class="headerlink" title="7. @staticmethod：在Python类中定义静态方法"></a>7. @staticmethod：在Python类中定义静态方法</h3><p>如前所述，静态方法不绑定到实例或类</p>
+<p>被包含在一个类中只是因为在逻辑上属于那个类</p>
+<p>静态方法通常用于执行一组相关任务（例如数学计算）的实用程序类中</p>
+<p>通过将相关函数组织到类中的静态方法中，代码将变得更有条理且更易于理解</p>
+<p>要定义一个静态方法，只需要使用<code>@staticmethod</code>装饰器</p>
+<p>看一个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, first_name, last_name</span>):</span><br><span class="line">        self.first_name = first_name</span><br><span class="line">        self.last_name = last_name</span><br><span class="line">        self.nickname = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">set_nickname</span>(<span class="params">self, name</span>):</span><br><span class="line">        self.nickname = name</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">suitable_age</span>(<span class="params">age</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">6</span> &lt;= age &lt;= <span class="number">70</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(Student.suitable_age(<span class="number">99</span>)) <span class="comment"># False</span></span><br><span class="line"><span class="built_in">print</span>(Student.suitable_age(<span class="number">27</span>)) <span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(Student(<span class="string">&#x27;yang&#x27;</span>, <span class="string">&#x27;zhou&#x27;</span>).suitable_age(<span class="number">27</span>)) <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="8-dataclass：用更少的代码定义特殊类"><a href="#8-dataclass：用更少的代码定义特殊类" class="headerlink" title="8. @dataclass：用更少的代码定义特殊类"></a>8. @dataclass：用更少的代码定义特殊类</h3><p><code>@dataclass</code>装饰器（Python 3.7引入）可以自动为一个类生成几个特殊的方法，如<code>__init__</code>、<code>__repr__</code>、<code>__eq__</code>、<code>__lt__</code>等</p>
+<p>因此，可以节省大量编写这些基本方法的时间</p>
+<p>如果一个类主要用于存储数据，那么<code>@dataclass</code>装饰器是最需要被考虑的</p>
+<p>下面的示例只定义了一个名为<code>Point</code>的类的两个数据字段</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass</span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span>:</span><br><span class="line">    x: <span class="built_in">float</span></span><br><span class="line">    y: <span class="built_in">float</span></span><br><span class="line"></span><br><span class="line">point = Point(<span class="number">1.0</span>, <span class="number">2.0</span>)</span><br><span class="line"><span class="built_in">print</span>(point)</span><br><span class="line"><span class="comment"># Point(x=1.0, y=2.0)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="9-atexit-register：注册一个在程序正常终止时执行的函数"><a href="#9-atexit-register：注册一个在程序正常终止时执行的函数" class="headerlink" title="9. @atexit.register：注册一个在程序正常终止时执行的函数"></a>9. @atexit.register：注册一个在程序正常终止时执行的函数</h3><p>来自<code>atexit</code>模块的<code>@register</code>装饰器可以在Python解释器退出时执行一个函数</p>
+<p>这个装饰器对于执行最终任务非常有用，例如释放资源</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> atexit</span><br><span class="line"></span><br><span class="line"><span class="meta">@atexit.register</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">goodbye</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Bye bye!&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello Yang!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hello Yang!</span><br><span class="line">Bye bye!</span><br></pre></td></tr></table></figure>
+
+<p>如示例所示，由于使用<code>@register</code>装饰器，终端打印了“Bye bye!”</p>
+<p>即使没有显式调用<code>goodbye</code>函数</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/01-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/13.Cython/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/01-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/13.Cython/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/02/20/01-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/15.Pathlib/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    Unclassified
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/02/20/01-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/15.Pathlib/" class="trm-anima-link">
+                    
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/02/20</li>
+                <li>16:24</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2020- 2024</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">星唯向导</span>
+        </div>
+    
+
+
+    <!--添加运行时间-->
+    <span id="sitetime"></span>
+    <script language=javascript>
+	    function siteTime(){
+		    window.setTimeout("siteTime()", 1000);
+		    var seconds = 1000;
+		    var minutes = seconds * 60;
+		    var hours = minutes * 60;
+		    var days = hours * 24;
+		    var years = days * 365;
+		    var today = new Date();
+		    var todayYear = today.getFullYear();
+		    var todayMonth = today.getMonth()+1;
+		    var todayDate = today.getDate();
+		    var todayHour = today.getHours();
+		    var todayMinute = today.getMinutes();
+		    var todaySecond = today.getSeconds();
+		/* 
+        Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		    var t1 = Date.UTC(2023,05,25,18,12,20); //北京时间2018-2-13 00:00:00
+		    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		    var diff = t2-t1;
+		    var diffYears = Math.floor(diff/years);
+		    var diffDays = Math.floor((diff/days)-diffYears*365);
+		    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	    }
+	    siteTime();
+    </script>
+    <!--// 添加运行时间-->
+
+      
+
+     
+
+    
+        <div class="trm-footer-item">
+            在年轻的飞奔里，拥抱迎面而来的风~
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        Article table of contents
+				<span id="post-toc-top">
+					TOP
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="Python内置装饰器"><a rel="nofollow" class="trm-toc-link" href="#Python内置装饰器"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">Python内置装饰器</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="1、简介"><a rel="nofollow" class="trm-toc-link" href="#1、简介"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">1、简介</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2、内置装饰器"><a rel="nofollow" class="trm-toc-link" href="#2、内置装饰器"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">2、内置装饰器</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="1、@lru_cache：通过缓存加速程序"><a rel="nofollow" class="trm-toc-link" href="#1、-lru-cache：通过缓存加速程序"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">1、@lru_cache：通过缓存加速程序</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2. @total_ordering：类装饰器，填充缺失的比较方法"><a rel="nofollow" class="trm-toc-link" href="#2-total-ordering：类装饰器，填充缺失的比较方法"><span class="trm-toc-number">1.2.2.</span> <span class="trm-toc-text">2. @total_ordering：类装饰器，填充缺失的比较方法</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3. @contextmanager：制作定制的上下文管理器"><a rel="nofollow" class="trm-toc-link" href="#3-contextmanager：制作定制的上下文管理器"><span class="trm-toc-number">1.2.3.</span> <span class="trm-toc-text">3. @contextmanager：制作定制的上下文管理器</span></a></li><li class="trm-toc-item trm-toc-level-3" title="4. @property：为Python类设置getter和setter"><a rel="nofollow" class="trm-toc-link" href="#4-property：为Python类设置getter和setter"><span class="trm-toc-number">1.2.4.</span> <span class="trm-toc-text">4. @property：为Python类设置getter和setter</span></a></li><li class="trm-toc-item trm-toc-level-3" title="5. @cached_property：将方法的结果缓存为属性"><a rel="nofollow" class="trm-toc-link" href="#5-cached-property：将方法的结果缓存为属性"><span class="trm-toc-number">1.2.5.</span> <span class="trm-toc-text">5. @cached_property：将方法的结果缓存为属性</span></a></li><li class="trm-toc-item trm-toc-level-3" title="6. @classmethod：在Python类中定义类方法"><a rel="nofollow" class="trm-toc-link" href="#6-classmethod：在Python类中定义类方法"><span class="trm-toc-number">1.2.6.</span> <span class="trm-toc-text">6. @classmethod：在Python类中定义类方法</span></a></li><li class="trm-toc-item trm-toc-level-3" title="7. @staticmethod：在Python类中定义静态方法"><a rel="nofollow" class="trm-toc-link" href="#7-staticmethod：在Python类中定义静态方法"><span class="trm-toc-number">1.2.7.</span> <span class="trm-toc-text">7. @staticmethod：在Python类中定义静态方法</span></a></li><li class="trm-toc-item trm-toc-level-3" title="8. @dataclass：用更少的代码定义特殊类"><a rel="nofollow" class="trm-toc-link" href="#8-dataclass：用更少的代码定义特殊类"><span class="trm-toc-number">1.2.8.</span> <span class="trm-toc-text">8. @dataclass：用更少的代码定义特殊类</span></a></li><li class="trm-toc-item trm-toc-level-3" title="9. @atexit.register：注册一个在程序正常终止时执行的函数"><a rel="nofollow" class="trm-toc-link" href="#9-atexit-register：注册一个在程序正常终止时执行的函数"><span class="trm-toc-number">1.2.9.</span> <span class="trm-toc-text">9. @atexit.register：注册一个在程序正常终止时执行的函数</span></a></li></ol></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="Open toc">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.10"></script>
+
+</body>
+
+</html>
