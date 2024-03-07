@@ -3786,7 +3786,6 @@ pre .coffeescript .title {
 }
 
 
-/* 自定义扩展-简历模块 */
 .resume-container {
   display: flex; /* 启用 flex 布局 */
   align-items: stretch; /* 子项目将被拉伸以填满容器的高度 */
@@ -3795,17 +3794,20 @@ pre .coffeescript .title {
 
 .personal-info {
   flex: 1; /* 个人信息会填充剩余空间 */
-  /* 添加必要的内边距或外边距以实现适当的布局和间距 */
+  padding: 20px; /* 添加一些内边距以确保内容不会太挤 */
 }
 
 .picture-container {
   flex: 1; /* 图片容器也占用可用空间的一部分，您可以根据需要调整这个比例 */
-  /* 设定一个最大宽度防止图片容器过大 */
-  max-width: 200px; /* 或者根据实际布局需要调整 */
+  display: flex; /* 使图片容器也成为flex容器 */
+  justify-content: center; /* 水平居中图片 */
+  align-items: center; /* 垂直居中图片 */
+  padding: 20px; /* 根据需要调整，确保图片不会紧贴容器边缘 */
 }
 
 .picture-container img {
   max-width: 100%; /* 图片最大宽度为容器宽度 */
-  height: auto; /* 高度自动调整以保持图片比例 */
-  display: block; /* 确保没有额外的空间 */
+  max-height: 100%; /* 限制图片的最大高度，确保不会超出容器 */
+  object-fit: cover; /* 调整图片以覆盖容器，可能会裁剪图片的某些部分 */
 }
+
