@@ -20,24 +20,28 @@
 
     <style>
         .resume-container {
-        display: grid; /* 使用Grid布局 */
-        grid-template-columns: 1fr 1fr; /* 分为两列，每列分配可用空间的一半 */
-        align-items: stretch; /* 使网格项填满行高 */
-        gap: 20px; /* 可以根据需要在项目之间添加一些间隙 */
+        display: flex;
+        align-items: flex-start; /* 确保子项目从容器的起点开始对齐 */
+        justify-content: space-between;
         }
 
         .personal-info, .picture-container {
-        display: flex; /* 使内容居中显示 */
-        flex-direction: column; /* 内容垂直排列 */
-        justify-content: center; /* 垂直居中 */
-        align-items: center; /* 水平居中 */
+        flex: 1; /* 允许个人信息和图片容器占用等量空间 */
+        display: flex; /* 应用flex布局以进一步控制内容 */
+        flex-direction: column; /* 确保内容按列排列 */
+        }
+
+        .picture-container {
+        max-width: 200px; /* 限制图片容器的最大宽度 */
+        align-self: stretch; /* 让图片容器尝试占满整个可用高度 */
         }
 
         .picture-container img {
-        max-width: 100%; /* 图片最大宽度为容器宽度，保持图片的宽高比 */
-        height: auto; /* 高度自动，以保持比例 */
+        width: 100%; /* 宽度填满容器 */
+        height: auto; /* 高度自适应，保持原有宽高比 */
+        max-height: 100%; /* 确保图片高度不超过容器高度 */
+        object-fit: cover; /* 如果需要，图片会被裁剪以填满容器 */
         }
-
     </style>
 
     <!-- Favicon -->
