@@ -21,27 +21,28 @@
     <style>
         .resume-container {
         display: flex;
-        align-items: flex-start; /* 确保子项目从容器的起点开始对齐 */
-        justify-content: space-between;
+        align-items: flex-start; /* 对齐到顶部 */
+        justify-content: space-between; /* 两个主要元素之间留有空间 */
         }
 
-        .personal-info, .picture-container {
-        flex: 1; /* 允许个人信息和图片容器占用等量空间 */
-        display: flex; /* 应用flex布局以进一步控制内容 */
-        flex-direction: column; /* 确保内容按列排列 */
+        .personal-info {
+        flex: 3; /* 分配更多空间给个人信息栏 */
+        padding-right: 20px; /* 在个人信息栏和图片之间添加一些右边距 */
         }
 
         .picture-container {
-        max-width: 200px; /* 限制图片容器的最大宽度 */
-        align-self: stretch; /* 让图片容器尝试占满整个可用高度 */
+        flex: 1; /* 图片容器的空间少于个人信息 */
+        max-width: 200px; /* 限制最大宽度 */
+        max-height: 100%; /* 新增：限制最大高度 */
         }
 
         .picture-container img {
-        width: 100%; /* 宽度填满容器 */
-        height: auto; /* 高度自适应，保持原有宽高比 */
-        max-height: 100%; /* 确保图片高度不超过容器高度 */
-        object-fit: cover; /* 如果需要，图片会被裁剪以填满容器 */
+        width: 100%; /* 图片宽度自适应容器 */
+        max-height: 100%; /* 限制图片的最大高度 */
+        object-fit: contain; /* 图片会缩放以适应容器尺寸 */
+        display: block; /* 避免图片下方有额外的空间 */
         }
+
     </style>
 
     <!-- Favicon -->
